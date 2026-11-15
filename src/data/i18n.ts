@@ -43,6 +43,7 @@ export const UI_COPY: Record<
       galleryMultiSupportNote: string;
       editionComparisonTitle: string;
       allEditionsTab: string;
+      allCompactTab: string;
       umbrellaLabel: string;
       zoomPhoto: string;
     };
@@ -119,6 +120,7 @@ export const UI_COPY: Record<
       galleryMultiSupportNote: "Mendukung banyak foto dalam satu galeri slide.",
       editionComparisonTitle: "Progresi Peran Lintas 3 Edisi",
       allEditionsTab: "Semua 3 Edisi",
+      allCompactTab: "Semua",
       umbrellaLabel: "Naungan",
       zoomPhoto: "Perbesar",
     },
@@ -194,6 +196,7 @@ export const UI_COPY: Record<
       galleryMultiSupportNote: "Supports unlimited event photos via carousel strip.",
       editionComparisonTitle: "Role Progression Across 3 Editions",
       allEditionsTab: "All 3 Editions",
+      allCompactTab: "All",
       umbrellaLabel: "Organization",
       zoomPhoto: "Enlarge",
     },

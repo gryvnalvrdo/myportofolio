@@ -71,7 +71,7 @@ export function ExperienceModal({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[#18181B]/65 p-3 backdrop-blur-xs sm:p-6"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[#18181B]/65 p-0 backdrop-blur-xs sm:p-6"
           onClick={handleClose}
         >
           <motion.div
@@ -80,10 +80,10 @@ export function ExperienceModal({
             exit={{ opacity: 0, y: 12, scale: 0.98 }}
             transition={{ duration: 0.22 }}
             onClick={(e) => e.stopPropagation()}
-            className="flex max-h-[90vh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-[#DCDAD3] bg-[#FAF9F7] shadow-2xl"
+            className="flex h-[100dvh] w-full max-w-5xl flex-col overflow-hidden bg-[#FAF9F7] shadow-2xl sm:h-auto sm:max-h-[90vh] sm:rounded-2xl sm:border sm:border-[#DCDAD3]"
           >
             {/* Top Modal Toolbar */}
-            <div className="flex items-center justify-between gap-3 border-b border-[#E4E2DC] bg-white px-4 py-3 sm:px-6">
+            <div className="flex shrink-0 items-center justify-between gap-3 border-b border-[#E4E2DC] bg-white px-4 py-3 sm:px-6">
               <span className="text-xs font-medium text-[#52525B] tabular-nums">
                 {experience.period}
               </span>
@@ -124,8 +124,8 @@ export function ExperienceModal({
               </div>
             </div>
 
-            {/* Scrollable Split Body with smooth event switch transition */}
-            <div className="overflow-y-auto p-4 sm:p-6 lg:p-8">
+            {/* Scrollable Split Body: gallery first on mobile, side-by-side on desktop */}
+            <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={experience.id}
@@ -133,10 +133,10 @@ export function ExperienceModal({
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -10 }}
                   transition={{ duration: 0.18 }}
-                  className="grid grid-cols-1 gap-7 lg:grid-cols-12"
+                  className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-7"
                 >
-                  {/* Left Column: Factual Text & Responsibilities */}
-                  <div className="lg:col-span-6">
+                  {/* Left Column on Desktop, Second on Mobile: Factual Text & Responsibilities */}
+                  <div className="order-2 lg:order-1 lg:col-span-6">
                     <p className="text-xs font-semibold tracking-wider text-[#6B2737] uppercase">
                       {experience.role[locale]}
                     </p>
@@ -206,8 +206,8 @@ export function ExperienceModal({
                     </div>
                   </div>
 
-                  {/* Right Column: Scalable Multi-Photo Gallery Viewer */}
-                  <div className="lg:col-span-6">
+                  {/* Right Column on Desktop, First on Mobile: Scalable Multi-Photo Gallery Viewer */}
+                  <div className="order-1 lg:order-2 lg:col-span-6">
                     <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
                       <h3 className="text-xs font-semibold tracking-wider text-[#18181B] uppercase">
                         {copy.modal.galleryTitle}
