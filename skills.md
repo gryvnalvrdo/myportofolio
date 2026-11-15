@@ -100,10 +100,10 @@ Users should feel invited to explore rather than overwhelmed by dense CV bullet 
 - Keep career positioning open for HR teams across Management, Operations, Project, and Event roles rather than boxing the navbar brand strictly into one narrow job title.
 
 ### 4. Mobile Navigation, Scroll-Spy & Touch Symmetry
-- On mobile (`< lg`), use a smooth **slide-in drawer from the left** triggered by the hamburger button (`Menu`), with full backdrop overlay, `Esc` support, and clean link list without redundant "Menu Navigasi" labels.
+- On mobile (`< lg`), use a smooth **slide-in drawer from the left** triggered by the hamburger button (`Menu`), with full backdrop overlay, `Esc` support, and clean link list without redundant "Menu Navigasi" labels or distracting mobile header status pills.
 - Position the **profile portrait slot** first on mobile inside `#profil` (`order-1 lg:order-2`) so it stays immediately visible above the fold.
-- Track active scroll position (`#profil`, `#pengalaman`, `#kontak`) across both desktop pill navigation, mobile header indicator badge, and slide-over drawer highlights.
-- Provide a floating Back-to-Top button with circular scroll-progress indicator once scrolled past the Hero section, keeping the footer cleanly balanced.
+- Track active scroll position (`#profil`, `#pengalaman`, `#kontak`) inside desktop pill navigation and the mobile slide-over drawer, keeping top borders and floating Back-to-Top button clean without animating scroll-progress bars or rings.
+- Keep the footer compact and single-purpose with direct channel icons (Email, LinkedIn, WhatsApp) and info.
 - Filter tabs must fit cleanly in a single symmetric row (`grid-cols-3`) without awkward multi-line pill wrapping on `375px` viewports.
 - Card metric grids must match item count (`grid-cols-2` for 2 metrics, `grid-cols-3` for 3 metrics) so no metric sits orphaned.
 - Style scrollbars cleanly (`scrollbar-width: thin` + `::-webkit-scrollbar` with hidden arrow buttons) to harmonize with the warm ivory/burgundy palette inside modals and horizontal filmstrips.

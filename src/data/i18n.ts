@@ -60,15 +60,10 @@ export const UI_COPY: Record<
       kicker: string;
       heading: string;
       emailLabel: string;
-      emailHint: string;
-      phoneLabel: string;
-      phoneHint: string;
+      whatsappLabel: string;
       linkedinLabel: string;
       copyAction: string;
       copied: string;
-      openLinkedIn: string;
-      sendEmail: string;
-      callPhone: string;
     };
     placeholder: {
       awaitingPhoto: string;
@@ -140,15 +135,10 @@ export const UI_COPY: Record<
       kicker: "Kontak Profesional",
       heading: "Terbuka untuk Kesempatan Kerja & Kolaborasi",
       emailLabel: "Email",
-      emailHint: "Korespondensi email langsung",
-      phoneLabel: "Telepon",
-      phoneHint: "Kontak telepon langsung",
+      whatsappLabel: "WhatsApp",
       linkedinLabel: "LinkedIn",
       copyAction: "Salin",
       copied: "Tersalin",
-      openLinkedIn: "Buka LinkedIn",
-      sendEmail: "Kirim Email",
-      callPhone: "Hubungi via Telepon",
     },
     placeholder: {
       awaitingPhoto: "Slot Foto Siap Diisi",
@@ -219,15 +209,10 @@ export const UI_COPY: Record<
       kicker: "Professional Contact",
       heading: "Open for Career Opportunities & Collaboration",
       emailLabel: "Email",
-      emailHint: "Direct email correspondence",
-      phoneLabel: "Phone",
-      phoneHint: "Direct phone contact",
+      whatsappLabel: "WhatsApp",
       linkedinLabel: "LinkedIn",
       copyAction: "Copy",
       copied: "Copied",
-      openLinkedIn: "Open LinkedIn",
-      sendEmail: "Send Email",
-      callPhone: "Call Directly",
     },
     placeholder: {
       awaitingPhoto: "Photo Slot Ready",

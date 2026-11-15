@@ -19,7 +19,6 @@ interface NavbarProps {
 export function Navbar({ locale, onChangeLocale, onOpenCvModal }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<SectionId>("profil");
-  const [scrollProgress, setScrollProgress] = useState(0);
   const copy = UI_COPY[locale];
 
   const navLinks: { id: SectionId; href: string; label: string }[] = [
@@ -28,18 +27,12 @@ export function Navbar({ locale, onChangeLocale, onOpenCvModal }: NavbarProps) {
     { id: "kontak", href: "#kontak", label: copy.nav.contact },
   ];
 
-  const activeNavLabel =
-    navLinks.find((item) => item.id === activeSection)?.label ?? copy.nav.overview;
-
   useEffect(() => {
     let frameId: number | null = null;
 
     const updateScrollState = () => {
       frameId = null;
       const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = docHeight > 0 ? Math.min(Math.max(scrollTop / docHeight, 0), 1) : 0;
-      setScrollProgress(progress);
 
       if (window.innerHeight + scrollTop >= document.documentElement.scrollHeight - 48) {
         setActiveSection("kontak");
@@ -117,15 +110,10 @@ export function Navbar({ locale, onChangeLocale, onOpenCvModal }: NavbarProps) {
 
             <a
               href="#profil"
-              className="font-display shrink-0 rounded-md text-sm font-bold tracking-tight text-[#18181B] transition-colors hover:text-[#6B2737] sm:text-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6B2737] focus-visible:ring-offset-2"
+              className="font-display shrink-0 rounded-md text-base font-bold tracking-tight text-[#18181B] transition-colors hover:text-[#6B2737] sm:text-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6B2737] focus-visible:ring-offset-2"
             >
               {PORTFOLIO_PROFILE.name}
             </a>
-
-            <span className="inline-flex min-w-0 items-center gap-1 rounded-full border border-[#E4C9CF] bg-[#F7EFF1] px-2 py-0.5 text-[11px] font-semibold text-[#6B2737] sm:gap-1.5 sm:px-2.5 sm:text-xs lg:hidden">
-              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#6B2737]" aria-hidden="true" />
-              <span className="truncate">{activeNavLabel}</span>
-            </span>
           </div>
 
           <nav aria-label="Navigasi Utama" className="hidden items-center gap-1.5 lg:flex">
@@ -203,14 +191,6 @@ export function Navbar({ locale, onChangeLocale, onOpenCvModal }: NavbarProps) {
               {copy.nav.viewCv}
             </button>
           </div>
-        </div>
-
-        {/* Continuous Scroll Progress Indicator */}
-        <div className="pointer-events-none h-[2px] w-full bg-transparent" aria-hidden="true">
-          <div
-            className="h-full origin-left bg-[#6B2737]/75 transition-transform duration-150 ease-out"
-            style={{ transform: `scaleX(${scrollProgress})` }}
-          />
         </div>
       </header>
 

@@ -109,10 +109,7 @@ export default function PortfolioPage() {
           />
         </main>
 
-        <ContactFooterSection
-          locale={locale}
-          onOpenCvModal={() => setIsCvModalOpen(true)}
-        />
+        <ContactFooterSection locale={locale} />
 
         <BackToTopButton
           locale={locale}
