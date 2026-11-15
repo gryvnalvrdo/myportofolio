@@ -16,6 +16,12 @@ interface PhotoLightboxProps {
   onClose: () => void;
 }
 
+const FRAME_ASPECT_CLASSES: Record<MediaSlot["aspect"], string> = {
+  "16/10": "aspect-[16/10]",
+  "4/3": "aspect-[4/3]",
+  "4/5": "aspect-[4/5]",
+};
+
 export function PhotoLightbox({
   activeSlot,
   slots,
@@ -83,119 +89,109 @@ export function PhotoLightbox({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.18 }}
-          className="fixed inset-0 z-[70] flex items-center justify-center bg-[#18181B]/92 p-4 backdrop-blur-xs sm:p-6"
+          className="fixed inset-0 z-[70] flex items-center justify-center bg-[#18181B]/88 p-4 backdrop-blur-xs sm:p-6"
           onClick={(e) => {
             e.stopPropagation();
             onClose();
           }}
         >
-          {/* Close Button */}
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              onClose();
-            }}
-            aria-label={copy.modal.close}
-            className="absolute top-4 right-4 z-20 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-[#18181B] shadow-lg transition-colors hover:bg-[#6B2737] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white sm:top-6 sm:right-6"
-          >
-            <X className="h-5 w-5" aria-hidden="true" />
-          </button>
-
-          {/* Counter Pill */}
-          {hasMultiple && currentIndex >= 0 && (
-            <div className="pointer-events-none absolute top-5 left-1/2 z-20 -translate-x-1/2 rounded-full border border-white/15 bg-[#18181B]/80 px-3.5 py-1 text-xs font-semibold text-white tabular-nums sm:top-7">
-              {String(currentIndex + 1).padStart(2, "0")} /{" "}
-              {String(navigableSlots.length).padStart(2, "0")}
-            </div>
-          )}
-
-          {/* Previous / Next Navigation Buttons */}
-          {hasMultiple && (
-            <>
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  goPrev();
-                }}
-                aria-label={copy.modal.galleryPrevPhoto}
-                className="absolute left-3 top-1/2 z-20 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-[#18181B] shadow-lg transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white sm:left-6"
-              >
-                <ChevronLeft className="h-5 w-5" aria-hidden="true" />
-              </button>
-
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  goNext();
-                }}
-                aria-label={copy.modal.galleryNextPhoto}
-                className="absolute right-3 top-1/2 z-20 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-[#18181B] shadow-lg transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white sm:right-6"
-              >
-                <ChevronRight className="h-5 w-5" aria-hidden="true" />
-              </button>
-            </>
-          )}
-
-          {/* Active Enlarged Photo or Slot Preview */}
-          <div
-            className="flex w-full max-w-4xl flex-col items-center gap-3 px-10 sm:px-14"
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96, y: 8 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.96, y: 8 }}
+            transition={{ duration: 0.18, ease: "easeOut" }}
             onClick={(e) => e.stopPropagation()}
+            className={`w-full overflow-hidden rounded-2xl border border-white/15 bg-[#18181B] shadow-2xl ${
+              activeSlot.aspect === "4/5" ? "max-w-md" : "max-w-3xl"
+            }`}
           >
-            {hasRealImage && activeSlot.src ? (
-              <div className="relative h-[72vh] w-full">
+            {/* Photo Viewport with In-Frame Controls */}
+            <div
+              className={`relative w-full ${FRAME_ASPECT_CLASSES[activeSlot.aspect]} max-h-[75vh] ${
+                hasRealImage ? "bg-[#111114]" : "media-slot-grid bg-[#F3F1ED]"
+              }`}
+            >
+              {hasRealImage && activeSlot.src ? (
                 <Image
                   src={activeSlot.src}
                   alt={activeSlot.alt[locale]}
                   fill
-                  sizes="92vw"
+                  sizes="(max-width: 768px) 95vw, 768px"
                   className="object-contain"
                 />
-              </div>
-            ) : (
-              <div
-                className={`media-slot-grid flex w-full max-w-2xl flex-col justify-between rounded-2xl border border-[#DCDAD3] bg-[#F3F1ED] p-6 sm:p-8 ${
-                  activeSlot.aspect === "4/3"
-                    ? "aspect-[4/3]"
-                    : activeSlot.aspect === "4/5"
-                      ? "aspect-[4/5] max-h-[70vh] w-auto"
-                      : "aspect-[16/10]"
-                }`}
-              >
-                <div className="flex items-center justify-between gap-2">
-                  <span className="inline-flex items-center gap-1.5 rounded-md border border-[#E4E2DC] bg-white px-2.5 py-1 text-xs font-semibold text-[#52525B] uppercase">
+              ) : (
+                <div className="flex h-full w-full flex-col items-center justify-center px-14 text-center sm:px-16">
+                  <span className="inline-flex items-center gap-1.5 rounded-md border border-[#E4E2DC] bg-white px-2.5 py-1 text-[11px] font-semibold text-[#52525B] uppercase">
                     <Camera className="h-3.5 w-3.5 text-[#6B2737]" aria-hidden="true" />
-                    {activeSlot.slotCode}
+                    {activeSlot.slotCode} · {activeSlot.aspect.replace("/", ":")}
                   </span>
-                  <span className="rounded-md bg-white px-2 py-0.5 text-xs font-medium text-[#71717A] tabular-nums">
-                    {activeSlot.aspect.replace("/", ":")}
-                  </span>
-                </div>
-
-                <div className="my-auto text-center">
-                  <p className="text-xs font-bold tracking-wider text-[#6B2737] uppercase">
+                  <p className="mt-3 text-xs font-bold tracking-wider text-[#6B2737] uppercase sm:text-sm">
                     {copy.placeholder.awaitingPhoto}
                   </p>
-                  <p className="mx-auto mt-2 max-w-[34ch] text-sm font-medium text-[#3F3F46]">
-                    {activeSlot.caption[locale]}
+                  <p className="mt-1.5 text-[11px] font-medium text-[#71717A]">
+                    /public/images/
                   </p>
                 </div>
+              )}
 
-                <div className="flex items-center justify-between border-t border-[#DCDAD3] pt-3 text-xs text-[#71717A]">
-                  <span>/public/images/</span>
-                  <span>
-                    {copy.placeholder.aspectLabel} {activeSlot.aspect.replace("/", ":")}
-                  </span>
+              {/* Counter Inside Photo Frame (Top-Left) */}
+              {hasMultiple && currentIndex >= 0 && (
+                <div className="pointer-events-none absolute top-3 left-3 z-10 rounded-full border border-white/15 bg-[#18181B]/75 px-3 py-1 text-xs font-semibold text-white tabular-nums backdrop-blur-xs">
+                  {String(currentIndex + 1).padStart(2, "0")} /{" "}
+                  {String(navigableSlots.length).padStart(2, "0")}
                 </div>
-              </div>
-            )}
+              )}
 
-            <p className="max-w-2xl text-center text-sm font-medium text-white/95">
-              {activeSlot.caption[locale]}
-            </p>
-          </div>
+              {/* Close Button Inside Photo Frame (Top-Right) */}
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onClose();
+                }}
+                aria-label={copy.modal.close}
+                className="absolute top-3 right-3 z-10 inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-[#18181B]/75 text-white shadow-md backdrop-blur-xs transition-colors hover:bg-[#6B2737] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white sm:h-10 sm:w-10"
+              >
+                <X className="h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" />
+              </button>
+
+              {/* Prev / Next Controls Inside Photo Frame */}
+              {hasMultiple && (
+                <>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      goPrev();
+                    }}
+                    aria-label={copy.modal.galleryPrevPhoto}
+                    className="absolute left-3 top-1/2 z-10 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-[#18181B]/75 text-white shadow-md backdrop-blur-xs transition-colors hover:bg-[#6B2737] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white sm:h-10 sm:w-10"
+                  >
+                    <ChevronLeft className="h-5 w-5" aria-hidden="true" />
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      goNext();
+                    }}
+                    aria-label={copy.modal.galleryNextPhoto}
+                    className="absolute right-3 top-1/2 z-10 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-[#18181B]/75 text-white shadow-md backdrop-blur-xs transition-colors hover:bg-[#6B2737] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white sm:h-10 sm:w-10"
+                  >
+                    <ChevronRight className="h-5 w-5" aria-hidden="true" />
+                  </button>
+                </>
+              )}
+            </div>
+
+            {/* Clean Caption Footer Bar */}
+            <div className="border-t border-white/10 bg-[#18181B] px-4 py-3 text-center">
+              <p className="text-xs font-medium text-white/95 sm:text-sm">
+                {activeSlot.caption[locale]}
+              </p>
+            </div>
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>

@@ -19,6 +19,7 @@ interface NavbarProps {
 export function Navbar({ locale, onChangeLocale, onOpenCvModal }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<SectionId>("profil");
+  const [scrolledPastHero, setScrolledPastHero] = useState(false);
   const copy = UI_COPY[locale];
 
   const navLinks: { id: SectionId; href: string; label: string }[] = [
@@ -33,6 +34,7 @@ export function Navbar({ locale, onChangeLocale, onOpenCvModal }: NavbarProps) {
     const updateScrollState = () => {
       frameId = null;
       const scrollTop = window.scrollY;
+      setScrolledPastHero(scrollTop > 220);
 
       if (window.innerHeight + scrollTop >= document.documentElement.scrollHeight - 48) {
         setActiveSection("kontak");
@@ -112,7 +114,7 @@ export function Navbar({ locale, onChangeLocale, onOpenCvModal }: NavbarProps) {
               href="#profil"
               className="font-display shrink-0 rounded-md text-base font-bold tracking-tight text-[#18181B] transition-colors hover:text-[#6B2737] sm:text-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6B2737] focus-visible:ring-offset-2"
             >
-              {PORTFOLIO_PROFILE.name}
+              {scrolledPastHero ? PORTFOLIO_PROFILE.name : copy.nav.brandTop}
             </a>
           </div>
 
@@ -182,14 +184,16 @@ export function Navbar({ locale, onChangeLocale, onOpenCvModal }: NavbarProps) {
               </button>
             </div>
 
-            <button
-              type="button"
-              onClick={onOpenCvModal}
-              className="hidden min-h-[38px] items-center gap-1.5 rounded-full bg-[#6B2737] px-4 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-[#531D2A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6B2737] focus-visible:ring-offset-2 sm:inline-flex"
-            >
-              <FileText className="h-3.5 w-3.5" aria-hidden="true" />
-              {copy.nav.viewCv}
-            </button>
+            {scrolledPastHero && (
+              <button
+                type="button"
+                onClick={onOpenCvModal}
+                className="hidden min-h-[38px] items-center gap-1.5 rounded-full bg-[#6B2737] px-4 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-[#531D2A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6B2737] focus-visible:ring-offset-2 sm:inline-flex"
+              >
+                <FileText className="h-3.5 w-3.5" aria-hidden="true" />
+                {copy.nav.viewCv}
+              </button>
+            )}
           </div>
         </div>
       </header>

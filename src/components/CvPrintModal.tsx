@@ -142,7 +142,7 @@ export function CvPrintModal({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[#18181B]/65 p-3 backdrop-blur-xs sm:p-6"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[#18181B]/65 p-0 backdrop-blur-xs sm:p-6"
           onClick={handleClose}
         >
           <motion.div
@@ -151,83 +151,82 @@ export function CvPrintModal({
             exit={{ opacity: 0, y: 12, scale: 0.98 }}
             transition={{ duration: 0.22 }}
             onClick={(e) => e.stopPropagation()}
-            className="cv-print-paper flex max-h-[92vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-[#DCDAD3] bg-white shadow-2xl"
+            className="cv-print-paper flex h-[100dvh] w-full max-w-4xl flex-col overflow-hidden bg-white shadow-2xl sm:h-auto sm:max-h-[92vh] sm:rounded-2xl sm:border sm:border-[#DCDAD3]"
           >
-            {/* Toolbar */}
-            <div className="cv-print-hide flex flex-wrap items-center justify-between gap-3 border-b border-[#E4E2DC] bg-[#FAF9F7] px-4 py-3.5 sm:px-6">
-              <div>
-                <h2 id="cv-modal-title" className="text-sm font-bold text-[#18181B]">
-                  {cvLabels.title}
-                </h2>
-                <p className="text-xs text-[#52525B]">{cvLabels.subtitle}</p>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-2">
-                <div
-                  role="group"
-                  aria-label="ID / EN"
-                  className="inline-flex items-center rounded-full border border-[#DCDAD3] bg-white p-0.5"
-                >
-                  <button
-                    type="button"
-                    onClick={() => setCvLangOverride("id")}
-                    aria-pressed={cvLang === "id"}
-                    className={`min-h-[30px] rounded-full px-3 text-xs font-semibold transition-colors ${
-                      cvLang === "id"
-                        ? "bg-[#18181B] text-white"
-                        : "text-[#52525B] hover:text-[#18181B]"
-                    }`}
+            {/* Responsive Toolbar: Close stays top-right on mobile via flex order, zero duplicated controls */}
+            <div className="cv-print-hide border-b border-[#E4E2DC] bg-[#FAF9F7] px-4 py-3 sm:px-6 sm:py-3.5">
+              <div className="flex flex-wrap items-center justify-between gap-2.5 sm:gap-3">
+                <div className="min-w-0 flex-1 pr-2">
+                  <h2
+                    id="cv-modal-title"
+                    className="truncate text-sm font-bold text-[#18181B] sm:text-base"
                   >
-                    ID
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setCvLangOverride("en")}
-                    aria-pressed={cvLang === "en"}
-                    className={`min-h-[30px] rounded-full px-3 text-xs font-semibold transition-colors ${
-                      cvLang === "en"
-                        ? "bg-[#18181B] text-white"
-                        : "text-[#52525B] hover:text-[#18181B]"
-                    }`}
-                  >
-                    EN
-                  </button>
+                    {cvLabels.title}
+                  </h2>
+                  <p className="hidden text-xs text-[#52525B] sm:block">{cvLabels.subtitle}</p>
                 </div>
-
-                <button
-                  type="button"
-                  onClick={handlePrint}
-                  className="inline-flex min-h-[36px] items-center gap-1.5 rounded-full bg-[#6B2737] px-4 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-[#531D2A]"
-                >
-                  <Printer className="h-3.5 w-3.5" aria-hidden="true" />
-                  {cvLabels.printButton}
-                </button>
 
                 <button
                   type="button"
                   onClick={handleClose}
                   aria-label={cvLabels.close}
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#DCDAD3] bg-white text-[#18181B] hover:bg-[#18181B] hover:text-white"
+                  className="order-2 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#DCDAD3] bg-white text-[#18181B] hover:bg-[#18181B] hover:text-white sm:order-3"
                 >
                   <X className="h-4 w-4" aria-hidden="true" />
                 </button>
+
+                <div className="order-3 flex w-full items-center justify-between gap-2 sm:order-2 sm:w-auto sm:justify-end">
+                  <div
+                    role="group"
+                    aria-label="ID / EN"
+                    className="inline-flex items-center rounded-full border border-[#DCDAD3] bg-white p-0.5"
+                  >
+                    {(["id", "en"] as const).map((langOption) => (
+                      <button
+                        key={langOption}
+                        type="button"
+                        onClick={() => setCvLangOverride(langOption)}
+                        aria-pressed={cvLang === langOption}
+                        className={`min-h-[30px] rounded-full px-3 text-xs font-semibold uppercase transition-colors ${
+                          cvLang === langOption
+                            ? "bg-[#18181B] text-white"
+                            : "text-[#52525B] hover:text-[#18181B]"
+                        }`}
+                      >
+                        {langOption}
+                      </button>
+                    ))}
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={handlePrint}
+                    className="inline-flex min-h-[36px] items-center gap-1.5 rounded-full bg-[#6B2737] px-4 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-[#531D2A]"
+                  >
+                    <Printer className="h-3.5 w-3.5" aria-hidden="true" />
+                    {cvLabels.printButton}
+                  </button>
+                </div>
               </div>
             </div>
 
             {/* Printable Resume Body */}
-            <div className="overflow-y-auto p-5 sm:p-9">
+            <div className="flex-1 overflow-y-auto px-4 py-5 sm:p-9">
               <header className="border-b-2 border-[#18181B] pb-4">
-                <h1 className="font-display text-2xl font-bold tracking-tight text-[#18181B] uppercase sm:text-3xl">
+                <h1 className="font-display text-xl font-bold tracking-tight text-[#18181B] uppercase sm:text-3xl">
                   {PORTFOLIO_PROFILE.name}
                 </h1>
-                <p className="mt-1 text-xs text-[#3F3F46] tabular-nums sm:text-sm">
-                  {PORTFOLIO_PROFILE.phoneDisplay} | {PORTFOLIO_PROFILE.email} |{" "}
-                  {PORTFOLIO_PROFILE.location}
-                </p>
-                <p className="mt-0.5 break-all text-xs text-[#52525B]">
+                <div className="mt-1.5 flex flex-wrap items-center gap-x-2.5 gap-y-0.5 text-xs text-[#3F3F46] tabular-nums sm:text-sm">
+                  <span>{PORTFOLIO_PROFILE.phoneDisplay}</span>
+                  <span aria-hidden="true" className="text-[#A1A1AA]">·</span>
+                  <span className="break-all">{PORTFOLIO_PROFILE.email}</span>
+                  <span aria-hidden="true" className="text-[#A1A1AA]">·</span>
+                  <span>{PORTFOLIO_PROFILE.location}</span>
+                </div>
+                <p className="mt-1 break-all text-xs text-[#52525B]">
                   LinkedIn: {PORTFOLIO_PROFILE.linkedinUrl}
                 </p>
-                <p className="mt-3 text-xs leading-relaxed text-[#27272A] sm:text-sm">
+                <p className="mt-3 text-[13px] leading-relaxed text-[#27272A] sm:text-sm">
                   {PORTFOLIO_PROFILE.summary[cvLang]}
                 </p>
               </header>
@@ -237,17 +236,17 @@ export function CvPrintModal({
                   {cvLabels.experienceHeading}
                 </h3>
 
-                <div className="mt-3 space-y-4">
+                <div className="mt-3.5 space-y-4">
                   {cvEntries.map((entry) => (
                     <div key={entry.id}>
-                      <div className="flex flex-wrap items-baseline justify-between gap-2">
+                      <div className="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-2">
                         <h4 className="text-sm font-bold text-[#18181B]">{entry.title}</h4>
                         <span className="text-xs font-medium text-[#52525B] tabular-nums">
                           {entry.period}
                         </span>
                       </div>
                       <p className="text-xs font-semibold text-[#6B2737]">{entry.role}</p>
-                      <ul className="mt-1.5 list-disc space-y-1 pl-4 text-xs leading-relaxed text-[#27272A]">
+                      <ul className="mt-1.5 list-disc space-y-1 pl-4 text-[13px] leading-relaxed text-[#27272A] sm:text-xs">
                         {entry.bullets.map((bullet, idx) => (
                           <li key={idx}>{bullet}</li>
                         ))}
@@ -261,7 +260,7 @@ export function CvPrintModal({
                 <h3 className="border-b border-[#D4D2CC] pb-1 text-xs font-bold tracking-wider text-[#18181B] uppercase">
                   {cvLabels.educationHeading}
                 </h3>
-                <div className="mt-2 flex flex-wrap items-baseline justify-between gap-2">
+                <div className="mt-2 flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-2">
                   <div>
                     <p className="text-sm font-bold text-[#18181B]">
                       {PORTFOLIO_PROFILE.education.university} —{" "}
@@ -278,11 +277,11 @@ export function CvPrintModal({
                 </div>
               </section>
 
-              <section className="mt-6">
+              <section className="mt-6 pb-4 sm:pb-0">
                 <h3 className="border-b border-[#D4D2CC] pb-1 text-xs font-bold tracking-wider text-[#18181B] uppercase">
                   {cvLabels.skillsHeading}
                 </h3>
-                <div className="mt-2 space-y-1 text-xs leading-relaxed text-[#27272A]">
+                <div className="mt-2 space-y-1.5 text-[13px] leading-relaxed text-[#27272A] sm:space-y-1 sm:text-xs">
                   {SKILL_GROUPS.map((group) => (
                     <p key={group.id}>
                       <span className="font-semibold text-[#18181B]">

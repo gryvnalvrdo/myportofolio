@@ -4,6 +4,7 @@ export const UI_COPY: Record<
   Locale,
   {
     nav: {
+      brandTop: string;
       overview: string;
       experiences: string;
       contact: string;
@@ -78,6 +79,7 @@ export const UI_COPY: Record<
 > = {
   id: {
     nav: {
+      brandTop: "Portofolio",
       overview: "Profil",
       experiences: "Pengalaman",
       contact: "Kontak",
@@ -85,9 +87,9 @@ export const UI_COPY: Record<
       languageLabel: "Bahasa Tampilan",
     },
     hero: {
-      subtitle: "S1 Manajemen · Manajemen Proyek, Acara & Kepemimpinan Organisasi",
+      subtitle: "Manajemen Proyek, Acara & Kepemimpinan Organisasi",
       availableLocation: "Makassar, Indonesia",
-      academicLine: "Universitas Ciputra Makassar (2022–2026)",
+      academicLine: "Universitas Ciputra Makassar",
       ctaCv: "Lihat CV",
       ctaLinkedIn: "LinkedIn",
     },
@@ -152,6 +154,7 @@ export const UI_COPY: Record<
   },
   en: {
     nav: {
+      brandTop: "Portfolio",
       overview: "Profile",
       experiences: "Experience",
       contact: "Contact",
@@ -159,9 +162,9 @@ export const UI_COPY: Record<
       languageLabel: "Display Language",
     },
     hero: {
-      subtitle: "Bachelor of Management · Project, Event & Organizational Leadership",
+      subtitle: "Project, Event & Organizational Leadership",
       availableLocation: "Makassar, Indonesia",
-      academicLine: "Universitas Ciputra Makassar (2022–2026)",
+      academicLine: "Universitas Ciputra Makassar",
       ctaCv: "View CV",
       ctaLinkedIn: "LinkedIn",
     },
