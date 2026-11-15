@@ -20,7 +20,6 @@ export function Navbar({ locale, onChangeLocale, onOpenCvModal }: NavbarProps) {
   const navLinks = [
     { href: "#profil", label: copy.nav.overview },
     { href: "#pengalaman", label: copy.nav.experiences },
-    { href: "#kompetensi", label: copy.nav.skills },
     { href: "#kontak", label: copy.nav.contact },
   ];
 
@@ -48,7 +47,6 @@ export function Navbar({ locale, onChangeLocale, onOpenCvModal }: NavbarProps) {
       <header className="sticky top-0 z-40 border-b border-[#E4E2DC] bg-[#FAF9F7]/95 backdrop-blur-sm">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2.5">
-            {/* Mobile Left Drawer Trigger */}
             <button
               type="button"
               onClick={() => setMobileMenuOpen(true)}
@@ -67,7 +65,7 @@ export function Navbar({ locale, onChangeLocale, onOpenCvModal }: NavbarProps) {
             </a>
           </div>
 
-          <nav aria-label="Navigasi Utama" className="hidden items-center gap-7 lg:flex">
+          <nav aria-label="Navigasi Utama" className="hidden items-center gap-8 lg:flex">
             {navLinks.map((item) => (
               <a
                 key={item.href}
@@ -128,7 +126,6 @@ export function Navbar({ locale, onChangeLocale, onOpenCvModal }: NavbarProps) {
       <AnimatePresence>
         {mobileMenuOpen && (
           <div className="fixed inset-0 z-50 lg:hidden">
-            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -138,7 +135,6 @@ export function Navbar({ locale, onChangeLocale, onOpenCvModal }: NavbarProps) {
               className="fixed inset-0 bg-[#18181B]/50 backdrop-blur-xs"
             />
 
-            {/* Slide-In Left Panel */}
             <motion.aside
               role="dialog"
               aria-modal="true"

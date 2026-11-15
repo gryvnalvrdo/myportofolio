@@ -12,7 +12,6 @@ import {
 } from "@/components/ExperienceShowcase";
 import { ExperienceModal } from "@/components/ExperienceModal";
 import { EntranceSeriesModal } from "@/components/EntranceSeriesModal";
-import { SkillsAndEducationSection } from "@/components/SkillsAndEducationSection";
 import { CvPrintModal } from "@/components/CvPrintModal";
 import { ContactFooterSection } from "@/components/ContactFooterSection";
 
@@ -53,7 +52,6 @@ export default function PortfolioPage() {
     getServerLocaleSnapshot
   );
   const [activeFilter, setActiveFilter] = useState<ExperienceFilter>("all");
-  const [highlightedSkill, setHighlightedSkill] = useState<string | null>(null);
   const [selectedExperienceId, setSelectedExperienceId] = useState<string | null>(null);
   const [isEntranceOpen, setIsEntranceOpen] = useState(false);
   const [isCvModalOpen, setIsCvModalOpen] = useState(false);
@@ -72,16 +70,6 @@ export default function PortfolioPage() {
     window.dispatchEvent(new Event(LOCALE_EVENT));
   };
 
-  const handleOpenById = (id: string) => {
-    if (id === "entrance-series") {
-      setSelectedExperienceId(null);
-      setIsEntranceOpen(true);
-    } else {
-      setIsEntranceOpen(false);
-      setSelectedExperienceId(id);
-    }
-  };
-
   const activeExperience =
     EXPERIENCES.find((exp) => exp.id === selectedExperienceId) ?? null;
 
@@ -93,13 +81,6 @@ export default function PortfolioPage() {
     const nextItem = EXPERIENCES[nextIndex];
     if (nextItem) {
       setSelectedExperienceId(nextItem.id);
-    }
-  };
-
-  const handleSelectSkill = (skillKey: string | null) => {
-    setHighlightedSkill(skillKey);
-    if (skillKey) {
-      setActiveFilter("all");
     }
   };
 
@@ -116,29 +97,20 @@ export default function PortfolioPage() {
           <HeroSection
             locale={locale}
             onOpenCvModal={() => setIsCvModalOpen(true)}
-            onSelectExperience={handleOpenById}
           />
 
           <ExperienceShowcase
             locale={locale}
             activeFilter={activeFilter}
             onFilterChange={setActiveFilter}
-            highlightedSkill={highlightedSkill}
-            onClearSkillHighlight={() => setHighlightedSkill(null)}
             onOpenExperience={(id) => setSelectedExperienceId(id)}
             onOpenEntranceSeries={() => setIsEntranceOpen(true)}
-          />
-
-          <SkillsAndEducationSection
-            locale={locale}
-            activeSkill={highlightedSkill}
-            onSelectSkill={handleSelectSkill}
           />
         </main>
 
         <ContactFooterSection locale={locale} />
 
-        {/* Interactive Split Text + Photo Modals */}
+        {/* Interactive Split Text + Multi-Photo Modals */}
         <ExperienceModal
           experience={activeExperience}
           locale={locale}

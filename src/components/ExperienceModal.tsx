@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import type { ExperienceItem, Locale, MediaSlot } from "@/data/portfolio";
 import { UI_COPY } from "@/data/i18n";
 import { isSafeLocalAssetPath } from "@/lib/security";
-import { EventMediaFrame } from "./EventMediaFrame";
+import { EventPhotoGallery } from "./EventPhotoGallery";
 
 interface ExperienceModalProps {
   experience: ExperienceItem | null;
@@ -27,6 +27,16 @@ export function ExperienceModal({
   const [zoomedSlot, setZoomedSlot] = useState<MediaSlot | null>(null);
   const copy = UI_COPY[locale];
 
+  const allSlots = useMemo(() => {
+    if (!experience) return [];
+    return [experience.coverSlot, ...experience.gallerySlots];
+  }, [experience]);
+
+  const realSlots = useMemo(
+    () => allSlots.filter((slot) => isSafeLocalAssetPath(slot.src)),
+    [allSlots]
+  );
+
   useEffect(() => {
     if (!experience) return;
 
@@ -37,10 +47,22 @@ export function ExperienceModal({
         } else {
           onClose();
         }
-      } else if (event.key === "ArrowLeft" && !zoomedSlot) {
-        onPrev();
-      } else if (event.key === "ArrowRight" && !zoomedSlot) {
-        onNext();
+      } else if (event.key === "ArrowLeft") {
+        if (zoomedSlot && realSlots.length > 1) {
+          const idx = realSlots.findIndex((s) => s.id === zoomedSlot.id);
+          const next = realSlots[(idx - 1 + realSlots.length) % realSlots.length];
+          if (next) setZoomedSlot(next);
+        } else if (!zoomedSlot) {
+          onPrev();
+        }
+      } else if (event.key === "ArrowRight") {
+        if (zoomedSlot && realSlots.length > 1) {
+          const idx = realSlots.findIndex((s) => s.id === zoomedSlot.id);
+          const next = realSlots[(idx + 1) % realSlots.length];
+          if (next) setZoomedSlot(next);
+        } else if (!zoomedSlot) {
+          onNext();
+        }
       }
     };
 
@@ -52,7 +74,7 @@ export function ExperienceModal({
       window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = originalOverflow;
     };
-  }, [experience, zoomedSlot, onClose, onPrev, onNext]);
+  }, [experience, zoomedSlot, realSlots, onClose, onPrev, onNext]);
 
   return (
     <AnimatePresence>
@@ -85,7 +107,10 @@ export function ExperienceModal({
               <div className="flex items-center gap-1.5">
                 <button
                   type="button"
-                  onClick={onPrev}
+                  onClick={() => {
+                    setZoomedSlot(null);
+                    onPrev();
+                  }}
                   aria-label={copy.modal.prev}
                   className="inline-flex h-9 items-center gap-1 rounded-full border border-[#DCDAD3] bg-white px-3 text-xs font-medium text-[#18181B] transition-colors hover:border-[#18181B] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6B2737]"
                 >
@@ -94,7 +119,10 @@ export function ExperienceModal({
                 </button>
                 <button
                   type="button"
-                  onClick={onNext}
+                  onClick={() => {
+                    setZoomedSlot(null);
+                    onNext();
+                  }}
                   aria-label={copy.modal.next}
                   className="inline-flex h-9 items-center gap-1 rounded-full border border-[#DCDAD3] bg-white px-3 text-xs font-medium text-[#18181B] transition-colors hover:border-[#18181B] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6B2737]"
                 >
@@ -112,126 +140,114 @@ export function ExperienceModal({
               </div>
             </div>
 
-            {/* Scrollable Split Body: Text Left + Photo Gallery Right */}
+            {/* Scrollable Split Body with smooth event switch transition */}
             <div className="overflow-y-auto p-4 sm:p-6 lg:p-8">
-              <div className="grid grid-cols-1 gap-7 lg:grid-cols-12">
-                {/* Left Column: Factual Text & Responsibilities */}
-                <div className="lg:col-span-6">
-                  <p className="text-xs font-semibold tracking-wider text-[#6B2737] uppercase">
-                    {experience.role[locale]}
-                  </p>
-                  <h2
-                    id="experience-modal-title"
-                    className="font-display mt-1.5 text-2xl font-bold tracking-tight text-[#18181B] sm:text-3xl"
-                  >
-                    {experience.title[locale]}
-                  </h2>
-                  {experience.umbrella && (
-                    <p className="mt-1.5 text-xs font-medium text-[#52525B]">
-                      {copy.modal.umbrellaLabel}: {experience.umbrella[locale]}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={experience.id}
+                  initial={{ opacity: 0, x: 10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -10 }}
+                  transition={{ duration: 0.18 }}
+                  className="grid grid-cols-1 gap-7 lg:grid-cols-12"
+                >
+                  {/* Left Column: Factual Text & Responsibilities */}
+                  <div className="lg:col-span-6">
+                    <p className="text-xs font-semibold tracking-wider text-[#6B2737] uppercase">
+                      {experience.role[locale]}
                     </p>
-                  )}
+                    <h2
+                      id="experience-modal-title"
+                      className="font-display mt-1.5 text-2xl font-bold tracking-tight text-[#18181B] sm:text-3xl"
+                    >
+                      {experience.title[locale]}
+                    </h2>
+                    {experience.umbrella && (
+                      <p className="mt-1.5 text-xs font-medium text-[#52525B]">
+                        {copy.modal.umbrellaLabel}: {experience.umbrella[locale]}
+                      </p>
+                    )}
 
-                  {/* Symmetric Metrics Grid */}
-                  <div
-                    className={`mt-5 grid gap-2.5 ${
-                      experience.metrics.length === 2 ? "grid-cols-2" : "grid-cols-3"
-                    }`}
-                  >
-                    {experience.metrics.map((metric) => (
-                      <div
-                        key={metric.value}
-                        className="rounded-xl border border-[#E4E2DC] bg-white p-3"
-                      >
-                        <p className="text-sm font-bold text-[#18181B] tabular-nums sm:text-base">
-                          {metric.value}
-                        </p>
-                        <p className="mt-0.5 text-[11px] text-[#52525B]">
-                          {metric.label[locale]}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Responsibilities List */}
-                  <div className="mt-6">
-                    <h3 className="text-xs font-semibold tracking-wider text-[#18181B] uppercase">
-                      {copy.modal.responsibilitiesTitle}
-                    </h3>
-                    <ul className="mt-3 space-y-2.5">
-                      {experience.responsibilities[locale].map((bullet, idx) => (
-                        <li
-                          key={idx}
-                          className="flex items-start gap-3 rounded-xl border border-[#E4E2DC] bg-white p-3.5 text-sm leading-relaxed text-[#27272A]"
+                    {/* Symmetric Metrics Grid */}
+                    <div
+                      className={`mt-5 grid gap-2.5 ${
+                        experience.metrics.length === 2 ? "grid-cols-2" : "grid-cols-3"
+                      }`}
+                    >
+                      {experience.metrics.map((metric) => (
+                        <div
+                          key={metric.value}
+                          className="rounded-xl border border-[#E4E2DC] bg-white p-3"
                         >
-                          <span className="mt-0.5 text-xs font-bold text-[#6B2737] tabular-nums">
-                            0{idx + 1}
-                          </span>
-                          <span>{bullet}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Related Competencies */}
-                  <div className="mt-5 flex flex-wrap gap-1.5">
-                    {experience.relatedSkills.map((skill) => (
-                      <span
-                        key={skill}
-                        className="rounded-full border border-[#E4E2DC] bg-[#F3F1ED] px-3 py-1 text-[11px] font-medium text-[#3F3F46]"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Right Column: Side-by-Side Photo Gallery */}
-                <div className="lg:col-span-6">
-                  <div className="flex flex-wrap items-baseline justify-between gap-2">
-                    <h3 className="text-xs font-semibold tracking-wider text-[#18181B] uppercase">
-                      {copy.modal.galleryTitle}
-                    </h3>
-                    <span className="text-[11px] text-[#71717A]">
-                      {copy.modal.galleryHint}
-                    </span>
-                  </div>
-
-                  <div className="mt-3 space-y-4">
-                    <EventMediaFrame
-                      slot={experience.coverSlot}
-                      locale={locale}
-                      onZoom={setZoomedSlot}
-                      showCaptionOverlay
-                      sizes="(max-width: 1024px) 100vw, 480px"
-                    />
-
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                      {experience.gallerySlots.map((slot) => (
-                        <div key={slot.id} className="space-y-1.5">
-                          <EventMediaFrame
-                            slot={slot}
-                            locale={locale}
-                            compact
-                            onZoom={setZoomedSlot}
-                            sizes="(max-width: 640px) 100vw, 240px"
-                          />
-                          <p className="px-0.5 text-xs leading-snug text-[#52525B]">
-                            {slot.caption[locale]}
+                          <p className="text-sm font-bold text-[#18181B] tabular-nums sm:text-base">
+                            {metric.value}
+                          </p>
+                          <p className="mt-0.5 text-[11px] text-[#52525B]">
+                            {metric.label[locale]}
                           </p>
                         </div>
                       ))}
                     </div>
+
+                    {/* Responsibilities List */}
+                    <div className="mt-6">
+                      <h3 className="text-xs font-semibold tracking-wider text-[#18181B] uppercase">
+                        {copy.modal.responsibilitiesTitle}
+                      </h3>
+                      <ul className="mt-3 space-y-2.5">
+                        {experience.responsibilities[locale].map((bullet, idx) => (
+                          <li
+                            key={idx}
+                            className="flex items-start gap-3 rounded-xl border border-[#E4E2DC] bg-white p-3.5 text-sm leading-relaxed text-[#27272A]"
+                          >
+                            <span className="mt-0.5 text-xs font-bold text-[#6B2737] tabular-nums">
+                              0{idx + 1}
+                            </span>
+                            <span>{bullet}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Related Competencies */}
+                    <div className="mt-5 flex flex-wrap gap-1.5">
+                      {experience.relatedSkills.map((skill) => (
+                        <span
+                          key={skill}
+                          className="rounded-full border border-[#E4E2DC] bg-[#F3F1ED] px-3 py-1 text-[11px] font-medium text-[#3F3F46]"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              </div>
+
+                  {/* Right Column: Scalable Multi-Photo Gallery Viewer */}
+                  <div className="lg:col-span-6">
+                    <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
+                      <h3 className="text-xs font-semibold tracking-wider text-[#18181B] uppercase">
+                        {copy.modal.galleryTitle}
+                      </h3>
+                      <span className="text-[11px] text-[#71717A]">
+                        {copy.modal.galleryHint}
+                      </span>
+                    </div>
+
+                    <EventPhotoGallery
+                      slots={allSlots}
+                      locale={locale}
+                      onZoom={setZoomedSlot}
+                    />
+                  </div>
+                </motion.div>
+              </AnimatePresence>
             </div>
           </motion.div>
 
-          {/* Lightbox Overlay */}
+          {/* Fullscreen Photo Lightbox with Next/Prev */}
           {zoomedSlot && isSafeLocalAssetPath(zoomedSlot.src) && (
             <div
-              className="fixed inset-0 z-[60] flex items-center justify-center bg-[#18181B]/90 p-4"
+              className="fixed inset-0 z-[60] flex items-center justify-center bg-[#18181B]/92 p-4"
               onClick={(e) => {
                 e.stopPropagation();
                 setZoomedSlot(null);
@@ -241,10 +257,42 @@ export function ExperienceModal({
                 type="button"
                 onClick={() => setZoomedSlot(null)}
                 aria-label={copy.modal.close}
-                className="absolute top-4 right-4 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-[#18181B]"
+                className="absolute top-4 right-4 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-[#18181B]"
               >
                 <X className="h-5 w-5" />
               </button>
+
+              {realSlots.length > 1 && (
+                <>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const idx = realSlots.findIndex((s) => s.id === zoomedSlot.id);
+                      const prev = realSlots[(idx - 1 + realSlots.length) % realSlots.length];
+                      if (prev) setZoomedSlot(prev);
+                    }}
+                    aria-label={copy.modal.galleryPrevPhoto}
+                    className="absolute left-3 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-[#18181B] hover:bg-white sm:left-6"
+                  >
+                    <ChevronLeft className="h-5 w-5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const idx = realSlots.findIndex((s) => s.id === zoomedSlot.id);
+                      const next = realSlots[(idx + 1) % realSlots.length];
+                      if (next) setZoomedSlot(next);
+                    }}
+                    aria-label={copy.modal.galleryNextPhoto}
+                    className="absolute right-3 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-[#18181B] hover:bg-white sm:right-6"
+                  >
+                    <ChevronRight className="h-5 w-5" />
+                  </button>
+                </>
+              )}
+
               <div
                 className="relative h-[78vh] w-full max-w-4xl"
                 onClick={(e) => e.stopPropagation()}

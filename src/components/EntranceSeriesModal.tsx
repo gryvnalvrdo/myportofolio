@@ -8,7 +8,7 @@ import type { EntranceEdition, Locale, MediaSlot } from "@/data/portfolio";
 import { ENTRANCE_SERIES } from "@/data/portfolio";
 import { UI_COPY } from "@/data/i18n";
 import { isSafeLocalAssetPath } from "@/lib/security";
-import { EventMediaFrame } from "./EventMediaFrame";
+import { EventPhotoGallery } from "./EventPhotoGallery";
 
 interface EntranceSeriesModalProps {
   isOpen: boolean;
@@ -142,7 +142,7 @@ export function EntranceSeriesModal({
               </div>
             </div>
 
-            {/* Scrollable Body showing all 3 Rank-Differentiated Editions */}
+            {/* Scrollable Body showing all 3 Rank-Differentiated Editions + Multi-Photo Galleries */}
             <div className="space-y-5 overflow-y-auto p-4 sm:p-6">
               {visibleEditions.map((edition) => {
                 const tierStyles =
@@ -196,7 +196,7 @@ export function EntranceSeriesModal({
                       </span>
                     </div>
 
-                    {/* Split Content: Text Left + Photos Right */}
+                    {/* Split Content: Text Left + Multi-Photo Gallery Right */}
                     <div className="grid grid-cols-1 gap-5 p-4 sm:p-6 lg:grid-cols-12">
                       <div className="lg:col-span-6">
                         {edition.umbrella && (
@@ -247,22 +247,12 @@ export function EntranceSeriesModal({
                       </div>
 
                       <div className="lg:col-span-6">
-                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                          {edition.gallerySlots.map((slot) => (
-                            <div key={slot.id} className="space-y-1.5">
-                              <EventMediaFrame
-                                slot={slot}
-                                locale={locale}
-                                compact
-                                onZoom={setZoomedSlot}
-                                sizes="(max-width: 640px) 100vw, 280px"
-                              />
-                              <p className="px-0.5 text-xs leading-snug text-[#52525B]">
-                                {slot.caption[locale]}
-                              </p>
-                            </div>
-                          ))}
-                        </div>
+                        <EventPhotoGallery
+                          slots={[edition.coverSlot, ...edition.gallerySlots]}
+                          locale={locale}
+                          onZoom={setZoomedSlot}
+                          sizes="(max-width: 1024px) 100vw, 480px"
+                        />
                       </div>
                     </div>
                   </article>
@@ -274,7 +264,7 @@ export function EntranceSeriesModal({
           {/* Zoom Lightbox */}
           {zoomedSlot && isSafeLocalAssetPath(zoomedSlot.src) && (
             <div
-              className="fixed inset-0 z-[60] flex items-center justify-center bg-[#18181B]/90 p-4"
+              className="fixed inset-0 z-[60] flex items-center justify-center bg-[#18181B]/92 p-4"
               onClick={(e) => {
                 e.stopPropagation();
                 setZoomedSlot(null);

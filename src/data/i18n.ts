@@ -6,7 +6,6 @@ export const UI_COPY: Record<
     nav: {
       overview: string;
       experiences: string;
-      skills: string;
       contact: string;
       viewCv: string;
       menuTitle: string;
@@ -15,12 +14,10 @@ export const UI_COPY: Record<
     hero: {
       subtitle: string;
       availableLocation: string;
+      academicLine: string;
       ctaExplore: string;
       ctaCv: string;
       ctaLinkedIn: string;
-      educationLabel: string;
-      gpaLabel: string;
-      outsideGalleryTitle: string;
     };
     experiences: {
       kicker: string;
@@ -35,8 +32,6 @@ export const UI_COPY: Record<
       openCardCta: string;
       categoryEvent: string;
       categoryOrg: string;
-      highlightedSkillBanner: string;
-      clearSkillFilter: string;
     };
     modal: {
       close: string;
@@ -45,17 +40,13 @@ export const UI_COPY: Record<
       responsibilitiesTitle: string;
       galleryTitle: string;
       galleryHint: string;
+      galleryPrevPhoto: string;
+      galleryNextPhoto: string;
+      galleryMultiSupportNote: string;
       editionComparisonTitle: string;
       allEditionsTab: string;
       umbrellaLabel: string;
       zoomPhoto: string;
-    };
-    skillsSection: {
-      kicker: string;
-      heading: string;
-      subheading: string;
-      educationCardTitle: string;
-      skillHint: string;
     };
     cvModal: {
       title: string;
@@ -95,7 +86,6 @@ export const UI_COPY: Record<
     nav: {
       overview: "Profil",
       experiences: "Pengalaman",
-      skills: "Kompetensi",
       contact: "Kontak",
       viewCv: "Lihat / Cetak CV",
       menuTitle: "Menu Navigasi",
@@ -104,18 +94,16 @@ export const UI_COPY: Record<
     hero: {
       subtitle: "S1 Manajemen · Manajemen Proyek, Acara & Kepemimpinan Organisasi",
       availableLocation: "Makassar, Indonesia",
+      academicLine: "Universitas Ciputra Makassar (2022–2026) · IPK 3.77 / 4.00",
       ctaExplore: "Lihat Pengalaman",
       ctaCv: "Lihat / Cetak CV",
       ctaLinkedIn: "LinkedIn",
-      educationLabel: "Pendidikan",
-      gpaLabel: "IPK",
-      outsideGalleryTitle: "Dokumentasi Utama (Klik untuk Detail)",
     },
     experiences: {
       kicker: "Rekam Jejak Pengalaman",
       heading: "Pengalaman Acara & Organisasi",
       subheading:
-        "Klik kartu pengalaman mana pun untuk melihat detail tanggung jawab lengkap berdampingan dengan foto dokumentasi.",
+        "Klik kartu mana pun untuk membuka rincian tanggung jawab berdampingan dengan galeri foto dokumentasi.",
       filterAll: "Semua (7)",
       filterEvent: "Acara (5)",
       filterOrg: "Organisasi (2)",
@@ -126,28 +114,21 @@ export const UI_COPY: Record<
       openCardCta: "Lihat Detail & Foto",
       categoryEvent: "Acara / Program",
       categoryOrg: "Organisasi",
-      highlightedSkillBanner: "Menampilkan pengalaman terkait kompetensi:",
-      clearSkillFilter: "Reset",
     },
     modal: {
       close: "Tutup",
       prev: "Sebelumnya",
       next: "Berikutnya",
       responsibilitiesTitle: "Tanggung Jawab & Pelaksanaan",
-      galleryTitle: "Dokumentasi Foto",
-      galleryHint: "Klik foto yang tersedia untuk melihat ukuran penuh.",
+      galleryTitle: "Galeri Dokumentasi",
+      galleryHint: "Pilih thumbnail di bawah atau klik foto utama untuk memperbesar.",
+      galleryPrevPhoto: "Foto sebelumnya",
+      galleryNextPhoto: "Foto berikutnya",
+      galleryMultiSupportNote: "Mendukung banyak foto dalam satu galeri slide.",
       editionComparisonTitle: "Progresi Peran Lintas 3 Edisi",
       allEditionsTab: "Semua 3 Edisi",
       umbrellaLabel: "Naungan",
       zoomPhoto: "Perbesar",
-    },
-    skillsSection: {
-      kicker: "Pendidikan & Kemampuan",
-      heading: "Latar Akademik & Kompetensi",
-      subheading:
-        "Klik salah satu kompetensi di bawah untuk menyorot pengalaman organisasi dan acara yang relevan.",
-      educationCardTitle: "Pendidikan Formal",
-      skillHint: "Klik untuk sorot pengalaman",
     },
     cvModal: {
       title: "Ringkasan CV Dwibahasa",
@@ -187,7 +168,6 @@ export const UI_COPY: Record<
     nav: {
       overview: "Profile",
       experiences: "Experience",
-      skills: "Skills",
       contact: "Contact",
       viewCv: "View / Print CV",
       menuTitle: "Navigation Menu",
@@ -196,18 +176,16 @@ export const UI_COPY: Record<
     hero: {
       subtitle: "Bachelor of Management · Project, Event & Organizational Leadership",
       availableLocation: "Makassar, Indonesia",
+      academicLine: "Universitas Ciputra Makassar (2022–2026) · GPA 3.77 / 4.00",
       ctaExplore: "Explore Experience",
       ctaCv: "View / Print CV",
       ctaLinkedIn: "LinkedIn",
-      educationLabel: "Education",
-      gpaLabel: "GPA",
-      outsideGalleryTitle: "Featured Frames (Click to Inspect)",
     },
     experiences: {
       kicker: "Verified Track Record",
       heading: "Event & Organizational Experience",
       subheading:
-        "Click any experience card to inspect full responsibilities paired side-by-side with event photography.",
+        "Click any card to inspect full responsibilities paired side-by-side with the event photo gallery.",
       filterAll: "All (7)",
       filterEvent: "Events (5)",
       filterOrg: "Organizations (2)",
@@ -218,28 +196,21 @@ export const UI_COPY: Record<
       openCardCta: "View Details & Photos",
       categoryEvent: "Event / Program",
       categoryOrg: "Organization",
-      highlightedSkillBanner: "Highlighting experiences demonstrating:",
-      clearSkillFilter: "Reset",
     },
     modal: {
       close: "Close",
       prev: "Previous",
       next: "Next",
       responsibilitiesTitle: "Responsibilities & Execution",
-      galleryTitle: "Photo Documentation",
-      galleryHint: "Click any populated photo to enlarge.",
+      galleryTitle: "Photo Gallery",
+      galleryHint: "Select thumbnails below or click the main photo to enlarge.",
+      galleryPrevPhoto: "Previous photo",
+      galleryNextPhoto: "Next photo",
+      galleryMultiSupportNote: "Supports unlimited event photos via carousel strip.",
       editionComparisonTitle: "Role Progression Across 3 Editions",
       allEditionsTab: "All 3 Editions",
       umbrellaLabel: "Organization",
       zoomPhoto: "Enlarge",
-    },
-    skillsSection: {
-      kicker: "Education & Capabilities",
-      heading: "Academic Foundation & Core Skills",
-      subheading:
-        "Click any skill pill below to highlight matching event and organizational experiences.",
-      educationCardTitle: "Education",
-      skillHint: "Click to highlight experiences",
     },
     cvModal: {
       title: "Bilingual Resume (ID / EN)",

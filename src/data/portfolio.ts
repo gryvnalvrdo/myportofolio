@@ -105,52 +105,6 @@ export const PORTFOLIO_PROFILE = {
       en: "Profile portrait of Michelle Nathalie",
     },
   },
-  heroEventFrames: [
-    {
-      id: "hero-frame-rekfest",
-      targetExperienceId: "rekfest-2",
-      label: {
-        id: "REKFEST 2.0 · 30.000+ Pengunjung",
-        en: "REKFEST 2.0 · 30,000+ Attendees",
-      },
-      slot: {
-        id: "hero-slot-rekfest",
-        src: null,
-        slotCode: "DOKUMENTASI // REKFEST 2.0",
-        aspect: "16/10" as const,
-        caption: {
-          id: "Sorotan lapangan REKFEST 2.0",
-          en: "REKFEST 2.0 highlight photo",
-        },
-        alt: {
-          id: "Foto kegiatan REKFEST 2.0",
-          en: "REKFEST 2.0 event photo",
-        },
-      },
-    },
-    {
-      id: "hero-frame-entrance",
-      targetExperienceId: "entrance-series",
-      label: {
-        id: "ENTRANCE 1.0–3.0 · 3 Edisi",
-        en: "ENTRANCE 1.0–3.0 · 3 Editions",
-      },
-      slot: {
-        id: "hero-slot-entrance",
-        src: null,
-        slotCode: "DOKUMENTASI // ENTRANCE",
-        aspect: "16/10" as const,
-        caption: {
-          id: "Sorotan pelaksanaan ENTRANCE Series",
-          en: "ENTRANCE Series highlight photo",
-        },
-        alt: {
-          id: "Foto kegiatan ENTRANCE Series",
-          en: "ENTRANCE Series event photo",
-        },
-      },
-    },
-  ],
   education: {
     university: "Universitas Ciputra Makassar",
     city: "Makassar",

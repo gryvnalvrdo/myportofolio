@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { ArrowDownRight, ExternalLink, FileText, GraduationCap, MapPin } from "lucide-react";
 import type { Locale } from "@/data/portfolio";
 import { PORTFOLIO_PROFILE } from "@/data/portfolio";
@@ -10,27 +11,27 @@ import { EventMediaFrame } from "./EventMediaFrame";
 interface HeroSectionProps {
   locale: Locale;
   onOpenCvModal: () => void;
-  onSelectExperience: (id: string) => void;
 }
 
-export function HeroSection({
-  locale,
-  onOpenCvModal,
-  onSelectExperience,
-}: HeroSectionProps) {
+export function HeroSection({ locale, onOpenCvModal }: HeroSectionProps) {
   const copy = UI_COPY[locale];
   const safeLinkedIn = getSafeExternalHref(PORTFOLIO_PROFILE.linkedinUrl);
 
   return (
     <section
       id="profil"
-      className="border-b border-[#E4E2DC] bg-[#FAF9F7] py-8 sm:py-12 lg:py-16"
+      className="border-b border-[#E4E2DC] bg-[#FAF9F7] py-10 sm:py-14 lg:py-16"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-10">
-          {/* Left Column: Balanced Profile Summary & Actions */}
-          <div className="lg:col-span-6">
-            <h1 className="font-display text-3xl font-bold tracking-tight text-[#18181B] sm:text-4xl lg:text-[2.75rem] lg:leading-[1.12]">
+        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-12">
+          {/* Left Column: Clean Profile Summary & Actions */}
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="lg:col-span-7"
+          >
+            <h1 className="font-display text-3xl font-bold tracking-tight text-[#18181B] sm:text-4xl lg:text-[2.85rem] lg:leading-[1.1]">
               {PORTFOLIO_PROFILE.name}
             </h1>
 
@@ -46,41 +47,18 @@ export function HeroSection({
               <span aria-hidden="true" className="text-[#D4D4D8]">
                 ·
               </span>
-              <span className="tabular-nums">
-                {PORTFOLIO_PROFILE.education.university} ({PORTFOLIO_PROFILE.education.period})
+              <span className="inline-flex items-center gap-1.5 tabular-nums">
+                <GraduationCap className="h-4 w-4 text-[#6B2737]" aria-hidden="true" />
+                {copy.hero.academicLine}
               </span>
             </div>
 
-            <p className="mt-5 text-sm leading-relaxed text-[#3F3F46] sm:text-base sm:leading-[1.7]">
+            <p className="mt-5 text-sm leading-relaxed text-[#3F3F46] sm:text-base sm:leading-[1.72]">
               {PORTFOLIO_PROFILE.summary[locale]}
             </p>
 
-            {/* Compact Education Bar */}
-            <div className="mt-6 flex items-center justify-between gap-4 rounded-xl border border-[#E4E2DC] bg-white px-4 py-3">
-              <div className="min-w-0">
-                <p className="inline-flex items-center gap-1.5 text-[11px] font-semibold tracking-wide text-[#6B2737] uppercase">
-                  <GraduationCap className="h-3.5 w-3.5" aria-hidden="true" />
-                  {copy.hero.educationLabel}
-                </p>
-                <p className="mt-0.5 truncate text-sm font-semibold text-[#18181B]">
-                  {PORTFOLIO_PROFILE.education.university}
-                </p>
-                <p className="truncate text-xs text-[#52525B]">
-                  {PORTFOLIO_PROFILE.education.degree[locale]}
-                </p>
-              </div>
-              <div className="shrink-0 rounded-lg border border-[#E4E2DC] bg-[#FAF9F7] px-3 py-1.5 text-right">
-                <p className="text-[10px] font-semibold tracking-wider text-[#71717A] uppercase">
-                  {copy.hero.gpaLabel}
-                </p>
-                <p className="text-sm font-bold text-[#18181B] tabular-nums">
-                  {PORTFOLIO_PROFILE.education.gpa}
-                </p>
-              </div>
-            </div>
-
-            {/* Symmetric Action Buttons on Mobile & Desktop */}
-            <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:items-center">
+            {/* Symmetric Action Buttons */}
+            <div className="mt-7 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:items-center">
               <a
                 href="#pengalaman"
                 className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-full bg-[#18181B] px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#6B2737] sm:w-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6B2737] focus-visible:ring-offset-2"
@@ -110,45 +88,24 @@ export function HeroSection({
                 </a>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Right Column: Balanced Photo Showcase Card (Portrait + 2 Outside Event Highlights) */}
-          <div className="lg:col-span-6">
-            <div className="rounded-2xl border border-[#E4E2DC] bg-white p-3 shadow-[0_1px_3px_rgba(24,24,27,0.04)] sm:p-4">
+          {/* Right Column: Clean Balanced Portrait Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, delay: 0.08, ease: "easeOut" }}
+            className="lg:col-span-5"
+          >
+            <div className="rounded-2xl border border-[#E4E2DC] bg-white p-3 shadow-[0_1px_3px_rgba(24,24,27,0.04)] sm:p-3.5">
               <EventMediaFrame
                 slot={PORTFOLIO_PROFILE.portraitSlot}
                 locale={locale}
                 priority
-                sizes="(max-width: 1024px) 100vw, 540px"
+                sizes="(max-width: 1024px) 100vw, 460px"
               />
-
-              <div className="mt-3">
-                <p className="mb-2 text-[11px] font-semibold tracking-wide text-[#71717A] uppercase">
-                  {copy.hero.outsideGalleryTitle}
-                </p>
-                <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
-                  {PORTFOLIO_PROFILE.heroEventFrames.map((frame) => (
-                    <button
-                      key={frame.id}
-                      type="button"
-                      onClick={() => onSelectExperience(frame.targetExperienceId)}
-                      className="group text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6B2737] focus-visible:ring-offset-2 rounded-xl"
-                    >
-                      <EventMediaFrame
-                        slot={frame.slot}
-                        locale={locale}
-                        compact
-                        sizes="(max-width: 1024px) 46vw, 260px"
-                      />
-                      <p className="mt-1.5 truncate px-0.5 text-xs font-medium text-[#3F3F46] transition-colors group-hover:text-[#6B2737]">
-                        {frame.label[locale]}
-                      </p>
-                    </button>
-                  ))}
-                </div>
-              </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

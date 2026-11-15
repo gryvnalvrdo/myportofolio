@@ -5,11 +5,12 @@ Web portofolio dwibahasa (**Bahasa Indonesia & English**) untuk **Michelle Natha
 ## Fitur Utama
 - **Dwibahasa Penuh (`ID | EN`)**: Seluruh antarmuka web, ringkasan profil, poin tanggung jawab CV, hingga **CV siap cetak/PDF** dapat diganti antara Bahasa Indonesia dan Bahasa Inggris.
 - **Tata Grid Simetris (Desktop & Mobile)**:
-  - **Hero Seimbang dengan Foto di Luar**: Profil, ringkasan, info akademik, dan tombol aksi sejajar simetris dengan kartu foto portrait + 2 cuplikan dokumentasi acara di halaman depan.
+  - **Hero Seimbang & Terfokus**: Profil, ringkasan, info akademik ringkas, dan tombol aksi sejajar simetris dengan kartu foto portrait di sebelah kanan.
   - **1 Flagship Series Card**: Menggabungkan **ENTRANCE 1.0, 2.0, dan 3.0** dalam satu kartu. Sekali klik langsung menampilkan perbandingan ketiga edisi beserta perbedaan peringkat perannya (`Sponsorship Department` → `Ketua` → `Ketua`).
-  - **6 Kartu Pengalaman Simetris**: REKFEST 2.0, Badan Eksekutif Mahasiswa (BEM), Himpunan Mahasiswa Manajemen, Seminar Bela Negara & Anti Narkoba 2025, Orientation Week UC Makassar, dan FLAMIANS 1.0 — tampil ringkas di luar, dan terbuka berdampingan (**Teks + Galeri Foto**) saat diklik.
+  - **6 Kartu Pengalaman Simetris dengan Transisi Animasi**: REKFEST 2.0, Badan Eksekutif Mahasiswa (BEM), Himpunan Mahasiswa Manajemen, Seminar Bela Negara & Anti Narkoba 2025, Orientation Week UC Makassar, dan FLAMIANS 1.0 — tampil ringkas di luar, dan terbuka berdampingan (**Teks + Galeri Foto Multi-Slide**) saat diklik.
+  - **Galeri Foto Skalabel**: Mendukung jumlah foto tak terbatas per acara lewat viewer utama + filmstrip thumbnail + lightbox layar penuh.
   - **Drawer Navigasi Mobile Slide-Kiri**: Menu mobile muncul meluncur halus dari sisi kiri saat tombol garis 3 ditekan.
-- **Filter Kompetensi Interaktif & CV Siap Cetak HR (`ID / EN`)**: Sorot pengalaman terkait dengan klik pill kompetensi, serta buka *Lihat / Cetak CV* untuk membaca dan menyimpan CV resmi ke PDF dalam dua bahasa.
+- **CV Siap Cetak HR (`ID / EN`)**: Fitur *Lihat / Cetak CV* untuk membaca dan menyimpan CV resmi ke PDF dalam dua bahasa (termasuk rincian pendidikan, Hard Skills, Soft Skills, dan Bahasa).
 
 ## Cara Menambahkan Foto Asli
 Saat ini seluruh slot foto menggunakan placeholder arsitektural terstruktur agar tata letak tetap rapi sebelum foto diberikan. Ketika foto sudah tersedia:

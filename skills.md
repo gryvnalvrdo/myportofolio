@@ -96,31 +96,29 @@ Users should feel invited to explore rather than overwhelmed by dense CV bullet 
   - Include an interactive edition filter/focus tab (`Semua 3 Edisi` | `1.0 Sponsorship` | `2.0 Ketua` | `3.0 Ketua`) so visitors can compare all three side-by-side or inspect one edition's photo gallery up close.
 
 ### 3. Avoid Redundant Experience Duplication
-- Do not repeat the same event list across multiple overlapping sections (e.g., separate "Timeline" and "Highlight Cards" duplicating the "Experience" section). Keep navigation concise (`Profile`, `Experience`, `Skills`, `Contact`) and place outside highlight photo frames directly inside the Hero media showcase alongside individual card cover thumbnails.
+- Do not repeat the same event list across multiple overlapping sections (e.g., separate "Timeline", "Highlight Cards", or standalone "Competencies/Education" sections duplicating the CV). Keep page structure concise (**Profile**, **Experience**, **Contact**), placing academic credentials inline in the Profile summary and full skills/education breakdown inside the Bilingual CV Viewer (`Lihat / Cetak CV`).
 - Keep career positioning open for HR teams across Management, Operations, Project, and Event roles rather than boxing the navbar brand strictly into one narrow job title.
 
-### 4. Mobile Navigation & Touch Symmetry
+### 4. Mobile Navigation, Scrollbars & Touch Symmetry
 - On mobile (`< lg`), use a smooth **slide-in drawer from the left** triggered by the hamburger button (`Menu`), with full backdrop overlay and `Esc` support.
 - Filter tabs must fit cleanly in a single symmetric row (`grid-cols-3`) without awkward multi-line pill wrapping on `375px` viewports.
 - Card metric grids must match item count (`grid-cols-2` for 2 metrics, `grid-cols-3` for 3 metrics) so no metric sits orphaned.
-
-### 5. Interactive Skills & Competency Explorer
-- Group skills faithfully (`Hard Skills`, `Soft Skills`, `Bahasa`).
-- Allow clicking a skill pill (e.g., `Event Management`, `Strategic Planning`, `Leadership`) to highlight the specific experiences in the grid that demonstrate that competency — replacing meaningless static percentage bars with factual cross-referencing.
+- Style scrollbars cleanly (`scrollbar-width: thin` + `::-webkit-scrollbar` with hidden arrow buttons) to harmonize with the warm ivory/burgundy palette inside modals and horizontal filmstrips.
 
 ---
 
-## Skill 05 — Two-Layer Media & Graceful Photo Placeholder Architecture
+## Skill 05 — Two-Layer Media & Scalable Multi-Photo Gallery Architecture
 
-Photos are planned for both **outside the cards** and **inside the expanded experience drawers**, but real image assets may be supplied incrementally after the initial build.
+Photos are planned for both **outside the cards** and **inside the expanded experience drawers**, and each event may eventually contain **many photos** (`2`, `6`, `15+`).
 
 ### Media Layers
 1. **Outside Photos (Immediately Visible on Page)**:
-   - **Hero Showcase Frame**: Balanced `4:3` portrait frame paired with `2` clickable `16:10` highlight event slots (`REKFEST 2.0`, `ENTRANCE Series`) in one cohesive Hero media card.
-   - **Card Cover Thumbnails**: Every experience card outside renders 1 clean cover photo frame (`aspect-[16/10]`).
-2. **Inside Photos (Visible Upon Clicking Card)**:
-   - Each experience supports a gallery array (`2–4` photos with factual captions such as `"Dokumentasi Panitia"`, `"Pelaksanaan Acara"`, `"Koordinasi Lapangan"`).
-   - For the consolidated **ENTRANCE Series**, each edition (`1.0`, `2.0`, `3.0`) keeps its own separate photo array so photos from her Sponsorship era stay distinct from her Ketua eras.
+   - **Hero Portrait Frame**: Balanced `4:3` portrait card in the Hero section.
+   - **Card Cover Thumbnails**: Every experience card outside renders 1 clean cover photo frame (`aspect-[16/10]`) plus a live photo-count indicator when real photos are present.
+2. **Inside Photos (Scalable Carousel + Filmstrip Gallery)**:
+   - Use `<EventPhotoGallery />` supporting **any number of photos per event** via an active `16:10` stage viewer, `←` / `→` slide controls, `01 / NN` photo counter, scrollable thumbnail filmstrip, and fullscreen lightbox with keyboard navigation.
+   - Automatically hide empty placeholder entries once at least 1 real photo path is provided in `gallerySlots`.
+   - For the consolidated **ENTRANCE Series**, each edition (`1.0`, `2.0`, `3.0`) keeps its own separate `<EventPhotoGallery />` so photos from her Sponsorship era stay distinct from her Ketua eras.
 
 ### Placeholder Engineering Standard
 - Never render broken `<img>` tags, generic browser broken icons, or sloppy "No Image" boxes.
