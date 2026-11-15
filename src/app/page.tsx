@@ -14,6 +14,7 @@ import { ExperienceModal } from "@/components/ExperienceModal";
 import { EntranceSeriesModal } from "@/components/EntranceSeriesModal";
 import { CvPrintModal } from "@/components/CvPrintModal";
 import { ContactFooterSection } from "@/components/ContactFooterSection";
+import { BackToTopButton } from "@/components/BackToTopButton";
 
 const LOCALE_STORAGE_KEY = "mn_portfolio_locale";
 const LOCALE_EVENT = "mn-locale-change";
@@ -108,7 +109,15 @@ export default function PortfolioPage() {
           />
         </main>
 
-        <ContactFooterSection locale={locale} />
+        <ContactFooterSection
+          locale={locale}
+          onOpenCvModal={() => setIsCvModalOpen(true)}
+        />
+
+        <BackToTopButton
+          locale={locale}
+          isHidden={Boolean(selectedExperienceId || isEntranceOpen || isCvModalOpen)}
+        />
 
         {/* Interactive Split Text + Multi-Photo Modals */}
         <ExperienceModal

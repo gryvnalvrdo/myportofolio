@@ -20,16 +20,16 @@ export function HeroSection({ locale, onOpenCvModal }: HeroSectionProps) {
   return (
     <section
       id="profil"
-      className="border-b border-[#E4E2DC] bg-[#FAF9F7] py-10 sm:py-14 lg:py-16"
+      className="border-b border-[#E4E2DC] bg-[#FAF9F7] pt-6 pb-10 sm:py-14 lg:py-16"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-12">
-          {/* Left Column: Clean Profile Summary & Actions */}
+        <div className="grid grid-cols-1 items-center gap-6 sm:gap-8 lg:grid-cols-12 lg:gap-12">
+          {/* Text & Actions: second on mobile so profile photo slot is immediately visible, left on desktop */}
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className="lg:col-span-7"
+            className="order-2 lg:order-1 lg:col-span-7"
           >
             <h1 className="font-display text-3xl font-bold tracking-tight text-[#18181B] sm:text-4xl lg:text-[2.85rem] lg:leading-[1.1]">
               {PORTFOLIO_PROFILE.name}
@@ -90,12 +90,12 @@ export function HeroSection({ locale, onOpenCvModal }: HeroSectionProps) {
             </div>
           </motion.div>
 
-          {/* Right Column: Clean Balanced Portrait Card */}
+          {/* Portrait Card: first on mobile for immediate profile visibility, right on desktop */}
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, delay: 0.08, ease: "easeOut" }}
-            className="lg:col-span-5"
+            className="order-1 lg:order-2 lg:col-span-5"
           >
             <div className="rounded-2xl border border-[#E4E2DC] bg-white p-3 shadow-[0_1px_3px_rgba(24,24,27,0.04)] sm:p-3.5">
               <EventMediaFrame

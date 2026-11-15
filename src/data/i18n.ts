@@ -8,7 +8,6 @@ export const UI_COPY: Record<
       experiences: string;
       contact: string;
       viewCv: string;
-      menuTitle: string;
       languageLabel: string;
     };
     hero: {
@@ -27,7 +26,6 @@ export const UI_COPY: Record<
       filterEvent: string;
       filterOrg: string;
       seriesBadge: string;
-      seriesHint: string;
       openSeriesCta: string;
       openCardCta: string;
       categoryEvent: string;
@@ -64,13 +62,15 @@ export const UI_COPY: Record<
       heading: string;
       subheading: string;
       emailLabel: string;
+      emailHint: string;
       phoneLabel: string;
+      phoneHint: string;
       linkedinLabel: string;
-      copyEmail: string;
+      copyAction: string;
       copied: string;
-      copyPhone: string;
       openLinkedIn: string;
       sendEmail: string;
+      callPhone: string;
     };
     placeholder: {
       awaitingPhoto: string;
@@ -78,6 +78,7 @@ export const UI_COPY: Record<
     };
     footer: {
       copyright: string;
+      credentialLine: string;
       backToTop: string;
     };
   }
@@ -88,7 +89,6 @@ export const UI_COPY: Record<
       experiences: "Pengalaman",
       contact: "Kontak",
       viewCv: "Lihat / Cetak CV",
-      menuTitle: "Menu Navigasi",
       languageLabel: "Bahasa Tampilan",
     },
     hero: {
@@ -108,8 +108,6 @@ export const UI_COPY: Record<
       filterEvent: "Acara (5)",
       filterOrg: "Organisasi (2)",
       seriesBadge: "Seri 3 Edisi · 2022–2025",
-      seriesHint:
-        "Klik satu kali untuk melihat ENTRANCE 1.0, 2.0, dan 3.0 sekaligus beserta perbedaan perannya.",
       openSeriesCta: "Buka 3 Edisi ENTRANCE",
       openCardCta: "Lihat Detail & Foto",
       categoryEvent: "Acara / Program",
@@ -147,20 +145,23 @@ export const UI_COPY: Record<
       subheading:
         "Untuk keperluan proses rekrutmen HR, koordinasi acara, atau wawancara kerja, silakan hubungi melalui kontak berikut.",
       emailLabel: "Email",
+      emailHint: "Korespondensi email langsung",
       phoneLabel: "Telepon",
+      phoneHint: "Kontak telepon langsung",
       linkedinLabel: "LinkedIn",
-      copyEmail: "Salin Email",
-      copied: "Tersalin!",
-      copyPhone: "Salin Nomor",
+      copyAction: "Salin",
+      copied: "Tersalin",
       openLinkedIn: "Buka LinkedIn",
       sendEmail: "Kirim Email",
+      callPhone: "Hubungi via Telepon",
     },
     placeholder: {
       awaitingPhoto: "Slot Foto Siap Diisi",
       aspectLabel: "Rasio",
     },
     footer: {
-      copyright: "Michelle Nathalie · Makassar, Indonesia",
+      copyright: "Michelle Nathalie · S1 Manajemen",
+      credentialLine: "Universitas Ciputra Makassar · Makassar, Indonesia",
       backToTop: "Kembali ke atas",
     },
   },
@@ -170,7 +171,6 @@ export const UI_COPY: Record<
       experiences: "Experience",
       contact: "Contact",
       viewCv: "View / Print CV",
-      menuTitle: "Navigation Menu",
       languageLabel: "Display Language",
     },
     hero: {
@@ -190,8 +190,6 @@ export const UI_COPY: Record<
       filterEvent: "Events (5)",
       filterOrg: "Organizations (2)",
       seriesBadge: "3-Edition Series · 2022–2025",
-      seriesHint:
-        "Click once to view ENTRANCE 1.0, 2.0, and 3.0 side-by-side with clear role differentiation.",
       openSeriesCta: "Open 3 ENTRANCE Editions",
       openCardCta: "View Details & Photos",
       categoryEvent: "Event / Program",
@@ -229,20 +227,23 @@ export const UI_COPY: Record<
       subheading:
         "For HR recruitment inquiries, interview scheduling, or project collaboration, feel free to reach out directly.",
       emailLabel: "Email",
+      emailHint: "Direct email correspondence",
       phoneLabel: "Phone",
+      phoneHint: "Direct phone contact",
       linkedinLabel: "LinkedIn",
-      copyEmail: "Copy Email",
-      copied: "Copied!",
-      copyPhone: "Copy Number",
+      copyAction: "Copy",
+      copied: "Copied",
       openLinkedIn: "Open LinkedIn",
       sendEmail: "Send Email",
+      callPhone: "Call Directly",
     },
     placeholder: {
       awaitingPhoto: "Photo Slot Ready",
       aspectLabel: "Ratio",
     },
     footer: {
-      copyright: "Michelle Nathalie · Makassar, Indonesia",
+      copyright: "Michelle Nathalie · Bachelor of Management",
+      credentialLine: "Universitas Ciputra Makassar · Makassar, Indonesia",
       backToTop: "Back to top",
     },
   },

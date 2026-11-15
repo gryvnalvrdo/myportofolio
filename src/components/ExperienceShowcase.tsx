@@ -188,12 +188,12 @@ export function ExperienceShowcase({
                       </div>
                     </div>
 
-                    <div className="mt-5 flex flex-col gap-2 border-t border-[#ECEAE4] pt-4 sm:flex-row sm:items-center sm:justify-between">
-                      <p className="text-xs text-[#52525B]">{copy.experiences.seriesHint}</p>
-                      <span className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-[#6B2737] transition-transform duration-200 group-hover:translate-x-1">
-                        {copy.experiences.openSeriesCta}
-                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                      </span>
+                    <div className="mt-5 flex items-center justify-between border-t border-[#ECEAE4] pt-4 text-sm font-semibold text-[#6B2737]">
+                      <span>{copy.experiences.openSeriesCta}</span>
+                      <ArrowRight
+                        className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1"
+                        aria-hidden="true"
+                      />
                     </div>
                   </div>
                 </div>

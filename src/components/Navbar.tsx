@@ -7,6 +7,9 @@ import type { Locale } from "@/data/portfolio";
 import { PORTFOLIO_PROFILE } from "@/data/portfolio";
 import { UI_COPY } from "@/data/i18n";
 
+type SectionId = "profil" | "pengalaman" | "kontak";
+const SECTION_IDS: SectionId[] = ["profil", "pengalaman", "kontak"];
+
 interface NavbarProps {
   locale: Locale;
   onChangeLocale: (next: Locale) => void;
@@ -15,13 +18,68 @@ interface NavbarProps {
 
 export function Navbar({ locale, onChangeLocale, onOpenCvModal }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<SectionId>("profil");
+  const [scrollProgress, setScrollProgress] = useState(0);
   const copy = UI_COPY[locale];
 
-  const navLinks = [
-    { href: "#profil", label: copy.nav.overview },
-    { href: "#pengalaman", label: copy.nav.experiences },
-    { href: "#kontak", label: copy.nav.contact },
+  const navLinks: { id: SectionId; href: string; label: string }[] = [
+    { id: "profil", href: "#profil", label: copy.nav.overview },
+    { id: "pengalaman", href: "#pengalaman", label: copy.nav.experiences },
+    { id: "kontak", href: "#kontak", label: copy.nav.contact },
   ];
+
+  const activeNavLabel =
+    navLinks.find((item) => item.id === activeSection)?.label ?? copy.nav.overview;
+
+  useEffect(() => {
+    let frameId: number | null = null;
+
+    const updateScrollState = () => {
+      frameId = null;
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? Math.min(Math.max(scrollTop / docHeight, 0), 1) : 0;
+      setScrollProgress(progress);
+
+      if (window.innerHeight + scrollTop >= document.documentElement.scrollHeight - 48) {
+        setActiveSection("kontak");
+        return;
+      }
+
+      if (scrollTop < 48) {
+        setActiveSection("profil");
+        return;
+      }
+
+      const triggerOffset = 140;
+      let current: SectionId = "profil";
+      for (const id of SECTION_IDS) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= triggerOffset) {
+          current = id;
+        }
+      }
+      setActiveSection(current);
+    };
+
+    const scheduleUpdate = () => {
+      if (frameId === null) {
+        frameId = window.requestAnimationFrame(updateScrollState);
+      }
+    };
+
+    scheduleUpdate();
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate, { passive: true });
+
+    return () => {
+      if (frameId !== null) {
+        window.cancelAnimationFrame(frameId);
+      }
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+    };
+  }, []);
 
   useEffect(() => {
     if (!mobileMenuOpen) return;
@@ -45,39 +103,65 @@ export function Navbar({ locale, onChangeLocale, onOpenCvModal }: NavbarProps) {
   return (
     <>
       <header className="sticky top-0 z-40 border-b border-[#E4E2DC] bg-[#FAF9F7]/95 backdrop-blur-sm">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-2.5">
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-2 px-3.5 sm:gap-3 sm:px-6 lg:px-8">
+          <div className="flex min-w-0 items-center gap-2 sm:gap-2.5">
             <button
               type="button"
               onClick={() => setMobileMenuOpen(true)}
               aria-expanded={mobileMenuOpen}
               aria-label="Open navigation drawer"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-[#E4E2DC] bg-white text-[#18181B] transition-colors hover:border-[#6B2737] lg:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6B2737]"
+              className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[#E4E2DC] bg-white text-[#18181B] transition-colors hover:border-[#6B2737] sm:h-10 sm:w-10 lg:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6B2737]"
             >
-              <Menu className="h-5 w-5" aria-hidden="true" />
+              <Menu className="h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" />
             </button>
 
             <a
               href="#profil"
-              className="font-display rounded-md text-base font-bold tracking-tight text-[#18181B] transition-colors hover:text-[#6B2737] sm:text-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6B2737] focus-visible:ring-offset-2"
+              className="font-display shrink-0 rounded-md text-sm font-bold tracking-tight text-[#18181B] transition-colors hover:text-[#6B2737] sm:text-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6B2737] focus-visible:ring-offset-2"
             >
               {PORTFOLIO_PROFILE.name}
             </a>
+
+            <span className="inline-flex min-w-0 items-center gap-1 rounded-full border border-[#E4C9CF] bg-[#F7EFF1] px-2 py-0.5 text-[11px] font-semibold text-[#6B2737] sm:gap-1.5 sm:px-2.5 sm:text-xs lg:hidden">
+              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#6B2737]" aria-hidden="true" />
+              <span className="truncate">{activeNavLabel}</span>
+            </span>
           </div>
 
-          <nav aria-label="Navigasi Utama" className="hidden items-center gap-8 lg:flex">
-            {navLinks.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="text-sm font-medium text-[#52525B] transition-colors hover:text-[#18181B] focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6B2737]"
-              >
-                {item.label}
-              </a>
-            ))}
+          <nav aria-label="Navigasi Utama" className="hidden items-center gap-1.5 lg:flex">
+            {navLinks.map((item) => {
+              const isActive = activeSection === item.id;
+              return (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  aria-current={isActive ? "location" : undefined}
+                  className={`relative inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6B2737] ${
+                    isActive
+                      ? "font-semibold text-[#6B2737]"
+                      : "font-medium text-[#52525B] hover:text-[#18181B]"
+                  }`}
+                >
+                  {isActive && (
+                    <motion.span
+                      layoutId="desktop-nav-active"
+                      transition={{ type: "spring", stiffness: 420, damping: 34 }}
+                      className="absolute inset-0 rounded-full border border-[#E4C9CF] bg-[#F7EFF1]"
+                    />
+                  )}
+                  <span
+                    className={`relative z-10 h-1.5 w-1.5 rounded-full transition-colors ${
+                      isActive ? "bg-[#6B2737]" : "bg-transparent"
+                    }`}
+                    aria-hidden="true"
+                  />
+                  <span className="relative z-10">{item.label}</span>
+                </a>
+              );
+            })}
           </nav>
 
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
             {/* Language Switcher ID / EN */}
             <div
               role="group"
@@ -88,7 +172,7 @@ export function Navbar({ locale, onChangeLocale, onOpenCvModal }: NavbarProps) {
                 type="button"
                 onClick={() => onChangeLocale("id")}
                 aria-pressed={locale === "id"}
-                className={`min-h-[32px] rounded-full px-3 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6B2737] ${
+                className={`min-h-[30px] rounded-full px-2.5 text-[11px] font-semibold transition-colors sm:min-h-[32px] sm:px-3 sm:text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6B2737] ${
                   locale === "id"
                     ? "bg-[#18181B] text-white"
                     : "text-[#52525B] hover:text-[#18181B]"
@@ -100,7 +184,7 @@ export function Navbar({ locale, onChangeLocale, onOpenCvModal }: NavbarProps) {
                 type="button"
                 onClick={() => onChangeLocale("en")}
                 aria-pressed={locale === "en"}
-                className={`min-h-[32px] rounded-full px-3 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6B2737] ${
+                className={`min-h-[30px] rounded-full px-2.5 text-[11px] font-semibold transition-colors sm:min-h-[32px] sm:px-3 sm:text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6B2737] ${
                   locale === "en"
                     ? "bg-[#18181B] text-white"
                     : "text-[#52525B] hover:text-[#18181B]"
@@ -120,6 +204,14 @@ export function Navbar({ locale, onChangeLocale, onOpenCvModal }: NavbarProps) {
             </button>
           </div>
         </div>
+
+        {/* Continuous Scroll Progress Indicator */}
+        <div className="pointer-events-none h-[2px] w-full bg-transparent" aria-hidden="true">
+          <div
+            className="h-full origin-left bg-[#6B2737]/75 transition-transform duration-150 ease-out"
+            style={{ transform: `scaleX(${scrollProgress})` }}
+          />
+        </div>
       </header>
 
       {/* Mobile Left Slide-Over Drawer */}
@@ -138,7 +230,7 @@ export function Navbar({ locale, onChangeLocale, onOpenCvModal }: NavbarProps) {
             <motion.aside
               role="dialog"
               aria-modal="true"
-              aria-label={copy.nav.menuTitle}
+              aria-label={PORTFOLIO_PROFILE.name}
               initial={{ x: "-100%" }}
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
@@ -160,21 +252,31 @@ export function Navbar({ locale, onChangeLocale, onOpenCvModal }: NavbarProps) {
                   </button>
                 </div>
 
-                <p className="mt-5 text-[11px] font-semibold tracking-wider text-[#71717A] uppercase">
-                  {copy.nav.menuTitle}
-                </p>
-
-                <nav className="mt-2.5 flex flex-col gap-1.5">
-                  {navLinks.map((item) => (
-                    <a
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="flex min-h-[44px] items-center rounded-xl border border-transparent px-3.5 text-sm font-medium text-[#18181B] transition-colors hover:border-[#E4E2DC] hover:bg-white"
-                    >
-                      {item.label}
-                    </a>
-                  ))}
+                <nav className="mt-4 flex flex-col gap-1.5">
+                  {navLinks.map((item) => {
+                    const isActive = activeSection === item.id;
+                    return (
+                      <a
+                        key={item.href}
+                        href={item.href}
+                        aria-current={isActive ? "location" : undefined}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className={`flex min-h-[44px] items-center justify-between rounded-xl border px-3.5 text-sm transition-colors ${
+                          isActive
+                            ? "border-[#6B2737]/30 bg-[#F7EFF1] font-semibold text-[#6B2737]"
+                            : "border-transparent font-medium text-[#18181B] hover:border-[#E4E2DC] hover:bg-white"
+                        }`}
+                      >
+                        <span>{item.label}</span>
+                        {isActive && (
+                          <span
+                            className="h-2 w-2 rounded-full bg-[#6B2737]"
+                            aria-hidden="true"
+                          />
+                        )}
+                      </a>
+                    );
+                  })}
                 </nav>
 
                 <div className="mt-5 border-t border-[#E4E2DC] pt-5">

@@ -99,8 +99,11 @@ Users should feel invited to explore rather than overwhelmed by dense CV bullet 
 - Do not repeat the same event list across multiple overlapping sections (e.g., separate "Timeline", "Highlight Cards", or standalone "Competencies/Education" sections duplicating the CV). Keep page structure concise (**Profile**, **Experience**, **Contact**), placing academic credentials inline in the Profile summary and full skills/education breakdown inside the Bilingual CV Viewer (`Lihat / Cetak CV`).
 - Keep career positioning open for HR teams across Management, Operations, Project, and Event roles rather than boxing the navbar brand strictly into one narrow job title.
 
-### 4. Mobile Navigation, Scrollbars & Touch Symmetry
-- On mobile (`< lg`), use a smooth **slide-in drawer from the left** triggered by the hamburger button (`Menu`), with full backdrop overlay and `Esc` support.
+### 4. Mobile Navigation, Scroll-Spy & Touch Symmetry
+- On mobile (`< lg`), use a smooth **slide-in drawer from the left** triggered by the hamburger button (`Menu`), with full backdrop overlay, `Esc` support, and clean link list without redundant "Menu Navigasi" labels.
+- Position the **profile portrait slot** first on mobile inside `#profil` (`order-1 lg:order-2`) so it stays immediately visible above the fold.
+- Track active scroll position (`#profil`, `#pengalaman`, `#kontak`) across both desktop pill navigation, mobile header indicator badge, and slide-over drawer highlights.
+- Provide a floating Back-to-Top button with circular scroll-progress indicator once scrolled past the Hero section, keeping the footer cleanly balanced.
 - Filter tabs must fit cleanly in a single symmetric row (`grid-cols-3`) without awkward multi-line pill wrapping on `375px` viewports.
 - Card metric grids must match item count (`grid-cols-2` for 2 metrics, `grid-cols-3` for 3 metrics) so no metric sits orphaned.
 - Style scrollbars cleanly (`scrollbar-width: thin` + `::-webkit-scrollbar` with hidden arrow buttons) to harmonize with the warm ivory/burgundy palette inside modals and horizontal filmstrips.
