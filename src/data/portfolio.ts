@@ -612,7 +612,7 @@ export const EXPERIENCES: ExperienceItem[] = [
     metrics: [
       { value: "42", label: { id: "Anggota", en: "Members" } },
       { value: "7", label: { id: "Program Kerja", en: "Work Programs" } },
-      { value: "1 Thn", label: { id: "Periode", en: "Term" } },
+      { value: "1 Tahun", label: { id: "Periode", en: "Term" } },
     ],
     relatedSkills: [
       "Strategic Planning",
