@@ -39,9 +39,9 @@ Event planning is tactile, structured, logistical, and atmospheric. The interfac
 - **Canvas & Surface Palette**: Warm editorial alabaster/paper base (`#FAF8F5` / `#F4F1EA`), elevated crisp card surfaces (`#FFFFFF`), deep charcoal ink (`#171717`), muted slate secondary ink (`#52525B`), and fine architectural hairline borders (`#E4DFD5`).
 - **Restrained Accent**: Maximum one primary editorial accent (e.g., Deep Espresso/Burgundy `#6E2C36` or Terracotta Clay `#9E472A`) used strictly for active states, rank progression markers, and primary calls-to-action.
 - **Typography Pairing**:
-  - **Display**: High-character editorial serif or refined modern grotesk for titles and headings.
-  - **Body**: Clean, legible humanist sans-serif (`Plus Jakarta Sans` / `Inter` / `DM Sans`) with generous line height (`1.6`).
-  - **Metadata / Cue-Sheet Labels**: Monospace (`JetBrains Mono` / `IBM Plex Mono`) with `tabular-nums` for dates (`OCT 2025 – MAY 2026`), edition codes (`ED. 01–03`), and verified headcounts (`30.000+`, `>100`).
+  - **Display & Headings**: Crisp geometric/humanist sans-serif (`Plus Jakarta Sans`) with tight tracking (`-0.02em`) for authoritative corporate HR legibility.
+  - **Body & UI**: Clean humanist sans-serif (`Inter`) with generous line height (`1.6–1.7`) and `tabular-nums` for dates (`Oct 2025 – May 2026`), GPA (`3.77 / 4.00`), and verified headcounts (`30.000+`, `>100`).
+  - **Avoid**: Decorative newspaper serifs or terminal monospace fonts on general UI labels.
 
 ### Explicit Anti-Slop Bans
 - **NO** dark neon purple/indigo/cyan gradients, glowing blobs, or radial aura backgrounds.
@@ -70,7 +70,7 @@ Symmetry and alignment are mandatory across **mobile (`375px`)**, **tablet (`768
    - Standardized vertical rhythm: Cover Frame -> Metadata Row (Period + Category) -> Title & Role -> 1–2 line factual hook + key verified figures -> Bottom Action Cue (`Lihat Detail & Dokumentasi ->`).
 3. **Mobile Symmetry (`< 768px`)**:
    - Main experience cards stack cleanly (`grid-cols-1`) with uniform padding (`p-4` / `p-5`) and matching `aspect-[16/10]` frames.
-   - Compact summary stats and outside highlight photo strips use symmetric `grid-cols-2` (`2×2`) so mobile feels structured rather than endlessly vertical.
+   - Compact Hero highlight slots use symmetric `grid-cols-2` (`2×1` side-by-side) and cards match metric count (`grid-cols-2` or `grid-cols-3`) so no cell sits orphaned.
    - Zero horizontal page overflow (`overflow-x-hidden` audit at `375px` width) and touch targets at least `44×44px`.
 
 ---
@@ -95,13 +95,18 @@ Users should feel invited to explore rather than overwhelmed by dense CV bullet 
     - `ENTRANCE 3.0` (`Oct 2024 – May 2025`) — **Tier: Chairperson** (`Ketua` · di bawah Himpunan Mahasiswa Manajemen · 150+ anggota · 3 hari · 20.000+ pengunjung)
   - Include an interactive edition filter/focus tab (`Semua 3 Edisi` | `1.0 Sponsorship` | `2.0 Ketua` | `3.0 Ketua`) so visitors can compare all three side-by-side or inspect one edition's photo gallery up close.
 
-### 3. Interactive Chronological Timeline ("Run-of-Show" `2022–2026`)
-- Event planners coordinate overlapping workstreams. Provide a clean interactive chronology spanning `Nov 2022 – Oct 2026` showing concurrent roles (e.g., `Himpunan Mahasiswa Manajemen` alongside `ENTRANCE 3.0`; `BEM` alongside `REKFEST 2.0` & `Seminar Bela Negara`).
-- Hovering or clicking any timeline bar highlights its scope and opens its detailed modal.
+### 3. Avoid Redundant Experience Duplication
+- Do not repeat the same event list across multiple overlapping sections (e.g., separate "Timeline" and "Highlight Cards" duplicating the "Experience" section). Keep navigation concise (`Profile`, `Experience`, `Skills`, `Contact`) and place outside highlight photo frames directly inside the Hero media showcase alongside individual card cover thumbnails.
+- Keep career positioning open for HR teams across Management, Operations, Project, and Event roles rather than boxing the navbar brand strictly into one narrow job title.
 
-### 4. Interactive Skills & Competency Explorer
+### 4. Mobile Navigation & Touch Symmetry
+- On mobile (`< lg`), use a smooth **slide-in drawer from the left** triggered by the hamburger button (`Menu`), with full backdrop overlay and `Esc` support.
+- Filter tabs must fit cleanly in a single symmetric row (`grid-cols-3`) without awkward multi-line pill wrapping on `375px` viewports.
+- Card metric grids must match item count (`grid-cols-2` for 2 metrics, `grid-cols-3` for 3 metrics) so no metric sits orphaned.
+
+### 5. Interactive Skills & Competency Explorer
 - Group skills faithfully (`Hard Skills`, `Soft Skills`, `Bahasa`).
-- Allow clicking a skill pill (e.g., `Event Management`, `Strategic Planning`, `Leadership`) to highlight the specific experiences in the grid/list that demonstrate that competency — replacing meaningless static percentage bars with factual cross-referencing.
+- Allow clicking a skill pill (e.g., `Event Management`, `Strategic Planning`, `Leadership`) to highlight the specific experiences in the grid that demonstrate that competency — replacing meaningless static percentage bars with factual cross-referencing.
 
 ---
 
@@ -111,8 +116,7 @@ Photos are planned for both **outside the cards** and **inside the expanded expe
 
 ### Media Layers
 1. **Outside Photos (Immediately Visible on Page)**:
-   - **Hero Portrait Frame**: Dedicated `3:4` or `4:5` portrait frame for Michelle Nathalie.
-   - **Curated Highlight Strip ("Selected Documentation")**: Symmetric `4-col` desktop / `2×2` mobile strip displaying 4 highlight event frames outside, each clickable to open a lightbox or jump to its event case study.
+   - **Hero Showcase Frame**: Balanced `4:3` portrait frame paired with `2` clickable `16:10` highlight event slots (`REKFEST 2.0`, `ENTRANCE Series`) in one cohesive Hero media card.
    - **Card Cover Thumbnails**: Every experience card outside renders 1 clean cover photo frame (`aspect-[16/10]`).
 2. **Inside Photos (Visible Upon Clicking Card)**:
    - Each experience supports a gallery array (`2–4` photos with factual captions such as `"Dokumentasi Panitia"`, `"Pelaksanaan Acara"`, `"Koordinasi Lapangan"`).
@@ -120,11 +124,11 @@ Photos are planned for both **outside the cards** and **inside the expanded expe
 
 ### Placeholder Engineering Standard
 - Never render broken `<img>` tags, generic browser broken icons, or sloppy "No Image" boxes.
-- Create a reusable `<EventMediaFrame />` component powered by a central data file (`src/data/experiences.ts`).
+- Create a reusable `<EventMediaFrame />` component powered by a central data file (`src/data/portfolio.ts`).
 - When `imageSrc` is `null` or empty, render an **intentional Architectural Photo Slot**:
   - Subtle tonal grid pattern + `1px` inner hairline frame.
-  - Clean monospace slot label (e.g., `PHOTO SLOT · REKFEST 2.0 // COVER`).
-  - Recommended aspect ratio indicator (`16:10` / `3:4`) so the owner knows exactly what image to drop in.
+  - Clean sans slot label (e.g., `DOKUMENTASI // REKFEST 2.0`).
+  - Recommended aspect ratio indicator (`16:10` / `4:3`) so the owner knows exactly what image to drop in.
 - When `imageSrc` is provided (e.g., `"/images/rekfest-cover.jpg"`), `<EventMediaFrame />` seamlessly renders `<Image />` with `object-cover`, smooth hover scale (`scale-[1.02]`), and lightbox support.
 
 ---

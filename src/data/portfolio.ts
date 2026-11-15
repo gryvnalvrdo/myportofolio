@@ -82,16 +82,11 @@ export interface SkillGroup {
 
 export const PORTFOLIO_PROFILE = {
   name: "Michelle Nathalie",
-  initials: "MN",
   location: "Makassar, Indonesia",
   email: "micnatar@gmail.com",
   phoneDisplay: "082291956529",
   phoneHref: "tel:+6282291956529",
   linkedinUrl: "https://www.linkedin.com/in/michelle-nathalie-a3aaab295/",
-  headlineRole: {
-    id: "Event Planner & Kepemimpinan Organisasi",
-    en: "Event Planner & Organizational Leadership",
-  },
   summary: {
     id: "Lulusan S1 Manajemen Universitas Ciputra Makassar dengan pengalaman memimpin organisasi, administrasi, mengelola berbagai program kerja, dan pengelolaan tim. Memiliki kemampuan analitis dan strategis dalam merencanakan serta mengelola proyek, disertai kemampuan komunikasi dan pemecahan masalah yang baik, mengelola berbagai tanggung jawab secara terstruktur, dan beradaptasi dengan lingkungan kerja yang dinamis.",
     en: "Bachelor of Management graduate from Universitas Ciputra Makassar with experience in organizational leadership, administration, managing work programs, and team management. Possesses analytical and strategic capabilities in planning and managing projects, complemented by strong communication and problem-solving skills, structured management of responsibilities, and adaptability to dynamic work environments.",
@@ -99,8 +94,8 @@ export const PORTFOLIO_PROFILE = {
   portraitSlot: {
     id: "hero-portrait",
     src: null,
-    slotCode: "PORTRAIT // MICHELLE NATHALIE",
-    aspect: "4/5" as const,
+    slotCode: "PROFIL // PORTRAIT",
+    aspect: "4/3" as const,
     caption: {
       id: "Michelle Nathalie — Makassar, Indonesia",
       en: "Michelle Nathalie — Makassar, Indonesia",
@@ -110,6 +105,52 @@ export const PORTFOLIO_PROFILE = {
       en: "Profile portrait of Michelle Nathalie",
     },
   },
+  heroEventFrames: [
+    {
+      id: "hero-frame-rekfest",
+      targetExperienceId: "rekfest-2",
+      label: {
+        id: "REKFEST 2.0 · 30.000+ Pengunjung",
+        en: "REKFEST 2.0 · 30,000+ Attendees",
+      },
+      slot: {
+        id: "hero-slot-rekfest",
+        src: null,
+        slotCode: "DOKUMENTASI // REKFEST 2.0",
+        aspect: "16/10" as const,
+        caption: {
+          id: "Sorotan lapangan REKFEST 2.0",
+          en: "REKFEST 2.0 highlight photo",
+        },
+        alt: {
+          id: "Foto kegiatan REKFEST 2.0",
+          en: "REKFEST 2.0 event photo",
+        },
+      },
+    },
+    {
+      id: "hero-frame-entrance",
+      targetExperienceId: "entrance-series",
+      label: {
+        id: "ENTRANCE 1.0–3.0 · 3 Edisi",
+        en: "ENTRANCE 1.0–3.0 · 3 Editions",
+      },
+      slot: {
+        id: "hero-slot-entrance",
+        src: null,
+        slotCode: "DOKUMENTASI // ENTRANCE",
+        aspect: "16/10" as const,
+        caption: {
+          id: "Sorotan pelaksanaan ENTRANCE Series",
+          en: "ENTRANCE Series highlight photo",
+        },
+        alt: {
+          id: "Foto kegiatan ENTRANCE Series",
+          en: "ENTRANCE Series event photo",
+        },
+      },
+    },
+  ],
   education: {
     university: "Universitas Ciputra Makassar",
     city: "Makassar",
@@ -124,132 +165,7 @@ export const PORTFOLIO_PROFILE = {
     },
     gpa: "3.77 / 4.00",
   },
-  verifiedHighlights: [
-    {
-      value: "30.000+",
-      label: {
-        id: "Pengunjung REKFEST 2.0 (3 Hari)",
-        en: "REKFEST 2.0 Attendees (3 Days)",
-      },
-    },
-    {
-      value: "150+",
-      label: {
-        id: "Anggota Dikoordinasikan (ENTRANCE 3.0)",
-        en: "Team Members Coordinated (ENTRANCE 3.0)",
-      },
-    },
-    {
-      value: "3 Edisi",
-      label: {
-        id: "Progresi ENTRANCE (1.0 – 3.0)",
-        en: "ENTRANCE Editions (1.0 – 3.0)",
-      },
-    },
-    {
-      value: "3.77 / 4.00",
-      label: {
-        id: "IPK S1 Manajemen · UC Makassar",
-        en: "GPA Bachelor of Management · UC Makassar",
-      },
-    },
-  ],
 };
-
-export const OUTSIDE_HIGHLIGHT_FRAMES: HighlightFrame[] = [
-  {
-    id: "hl-rekfest",
-    targetExperienceId: "rekfest-2",
-    tag: { id: "Festival Kampus", en: "Campus Festival" },
-    title: {
-      id: "REKFEST 2.0 — 30.000+ Pengunjung",
-      en: "REKFEST 2.0 — 30,000+ Attendees",
-    },
-    slot: {
-      id: "hl-slot-rekfest",
-      src: null,
-      slotCode: "FRAME 01 // REKFEST 2.0",
-      aspect: "16/10",
-      caption: {
-        id: "Dokumentasi utama REKFEST 2.0 selama 3 hari pelaksanaan",
-        en: "Main documentation of REKFEST 2.0 across 3 event days",
-      },
-      alt: {
-        id: "Dokumentasi acara REKFEST 2.0",
-        en: "REKFEST 2.0 event documentation",
-      },
-    },
-  },
-  {
-    id: "hl-entrance",
-    targetExperienceId: "entrance-series",
-    tag: { id: "Seri 3 Edisi", en: "3-Edition Series" },
-    title: {
-      id: "ENTRANCE Series — 1.0 s/d 3.0",
-      en: "ENTRANCE Series — 1.0 to 3.0",
-    },
-    slot: {
-      id: "hl-slot-entrance",
-      src: null,
-      slotCode: "FRAME 02 // ENTRANCE SERIES",
-      aspect: "16/10",
-      caption: {
-        id: "Perjalanan tiga edisi ENTRANCE (2022–2025) di Himpunan Mahasiswa Manajemen",
-        en: "Three-edition ENTRANCE progression (2022–2025) under Management Student Union",
-      },
-      alt: {
-        id: "Dokumentasi seri acara ENTRANCE",
-        en: "ENTRANCE event series documentation",
-      },
-    },
-  },
-  {
-    id: "hl-bem",
-    targetExperienceId: "bem-uc",
-    tag: { id: "Kepemimpinan", en: "Leadership" },
-    title: {
-      id: "Ketua BEM — >15 Organisasi",
-      en: "Student Council Chair — >15 Orgs",
-    },
-    slot: {
-      id: "hl-slot-bem",
-      src: null,
-      slotCode: "FRAME 03 // BEM UC MAKASSAR",
-      aspect: "16/10",
-      caption: {
-        id: "Koordinasi kepengurusan Badan Eksekutif Mahasiswa (32 anggota, 8 program kerja)",
-        en: "Student Council governance (32 members, 8 work programs)",
-      },
-      alt: {
-        id: "Dokumentasi Badan Eksekutif Mahasiswa",
-        en: "Student Council leadership documentation",
-      },
-    },
-  },
-  {
-    id: "hl-seminar",
-    targetExperienceId: "seminar-bela-negara",
-    tag: { id: "Seminar Instansi", en: "Institutional Seminar" },
-    title: {
-      id: "Seminar Bela Negara & Anti Narkoba",
-      en: "National Defense & Anti-Drug Seminar",
-    },
-    slot: {
-      id: "hl-slot-seminar",
-      src: null,
-      slotCode: "FRAME 04 // SEMINAR 2025",
-      aspect: "16/10",
-      caption: {
-        id: "Koordinasi perlengkapan & pembicara dari BNN, Dokter Residen, dan TNI AD",
-        en: "Equipment & speaker coordination with BNN, Resident Doctors, and TNI AD",
-      },
-      alt: {
-        id: "Dokumentasi Seminar Bela Negara & Anti Narkoba 2025",
-        en: "National Defense & Anti-Drug Seminar 2025 documentation",
-      },
-    },
-  },
-];
 
 export const ENTRANCE_SERIES = {
   id: "entrance-series",

@@ -65,7 +65,6 @@ export function CvPrintModal({
     window.print();
   };
 
-  // Assemble CV entries in chronological order consistent with official CV
   const cvEntries = [
     {
       id: "bem",
@@ -144,7 +143,7 @@ export function CvPrintModal({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[#171717]/65 p-3 backdrop-blur-xs sm:p-6"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[#18181B]/65 p-3 backdrop-blur-xs sm:p-6"
           onClick={handleClose}
         >
           <motion.div
@@ -153,29 +152,29 @@ export function CvPrintModal({
             exit={{ opacity: 0, y: 12, scale: 0.98 }}
             transition={{ duration: 0.22 }}
             onClick={(e) => e.stopPropagation()}
-            className="cv-print-paper flex max-h-[92vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-[#DCD6CA] bg-white shadow-2xl"
+            className="cv-print-paper flex max-h-[92vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-[#DCDAD3] bg-white shadow-2xl"
           >
-            {/* Toolbar (hidden during print) */}
-            <div className="cv-print-hide flex flex-wrap items-center justify-between gap-3 border-b border-[#E5E0D6] bg-[#FAF8F5] px-4 py-3.5 sm:px-6">
+            {/* Toolbar */}
+            <div className="cv-print-hide flex flex-wrap items-center justify-between gap-3 border-b border-[#E4E2DC] bg-[#FAF9F7] px-4 py-3.5 sm:px-6">
               <div>
-                <h2 id="cv-modal-title" className="text-sm font-semibold text-[#171717]">
+                <h2 id="cv-modal-title" className="text-sm font-bold text-[#18181B]">
                   {ui.cvModal.title}
                 </h2>
                 <p className="text-xs text-[#52525B]">{ui.cvModal.subtitle}</p>
               </div>
 
               <div className="flex flex-wrap items-center gap-2">
-                <div className="inline-flex items-center gap-1 rounded-full border border-[#DCD6CA] bg-white p-0.5">
-                  <span className="pl-2.5 font-mono text-[11px] text-[#52525B]">
+                <div className="inline-flex items-center gap-1 rounded-full border border-[#DCDAD3] bg-white p-0.5">
+                  <span className="pl-2.5 text-[11px] font-medium text-[#52525B]">
                     {ui.cvModal.switchCvLang}
                   </span>
                   <button
                     type="button"
                     onClick={() => setCvLangOverride("id")}
-                    className={`min-h-[30px] rounded-full px-2.5 font-mono text-xs font-medium ${
+                    className={`min-h-[30px] rounded-full px-2.5 text-xs font-semibold ${
                       cvLang === "id"
-                        ? "bg-[#171717] text-white"
-                        : "text-[#52525B] hover:text-[#171717]"
+                        ? "bg-[#18181B] text-white"
+                        : "text-[#52525B] hover:text-[#18181B]"
                     }`}
                   >
                     ID
@@ -183,10 +182,10 @@ export function CvPrintModal({
                   <button
                     type="button"
                     onClick={() => setCvLangOverride("en")}
-                    className={`min-h-[30px] rounded-full px-2.5 font-mono text-xs font-medium ${
+                    className={`min-h-[30px] rounded-full px-2.5 text-xs font-semibold ${
                       cvLang === "en"
-                        ? "bg-[#171717] text-white"
-                        : "text-[#52525B] hover:text-[#171717]"
+                        ? "bg-[#18181B] text-white"
+                        : "text-[#52525B] hover:text-[#18181B]"
                     }`}
                   >
                     EN
@@ -196,7 +195,7 @@ export function CvPrintModal({
                 <button
                   type="button"
                   onClick={handlePrint}
-                  className="inline-flex min-h-[36px] items-center gap-1.5 rounded-full bg-[#6B2737] px-4 py-1.5 text-xs font-medium text-white transition-colors hover:bg-[#531D2A]"
+                  className="inline-flex min-h-[36px] items-center gap-1.5 rounded-full bg-[#6B2737] px-4 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-[#531D2A]"
                 >
                   <Printer className="h-3.5 w-3.5" aria-hidden="true" />
                   {ui.cvModal.printButton}
@@ -206,7 +205,7 @@ export function CvPrintModal({
                   type="button"
                   onClick={handleClose}
                   aria-label={ui.cvModal.close}
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#DCD6CA] bg-white text-[#171717] hover:bg-[#171717] hover:text-white"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#DCDAD3] bg-white text-[#18181B] hover:bg-[#18181B] hover:text-white"
                 >
                   <X className="h-4 w-4" aria-hidden="true" />
                 </button>
@@ -214,16 +213,16 @@ export function CvPrintModal({
             </div>
 
             {/* Printable Resume Body */}
-            <div className="overflow-y-auto p-6 sm:p-10">
-              <header className="border-b-2 border-[#171717] pb-4">
-                <h1 className="font-serif text-3xl font-semibold tracking-tight text-[#171717] uppercase">
+            <div className="overflow-y-auto p-5 sm:p-9">
+              <header className="border-b-2 border-[#18181B] pb-4">
+                <h1 className="font-display text-2xl font-bold tracking-tight text-[#18181B] uppercase sm:text-3xl">
                   {PORTFOLIO_PROFILE.name}
                 </h1>
-                <p className="mt-1 text-xs text-[#3F3F46] sm:text-sm">
+                <p className="mt-1 text-xs text-[#3F3F46] tabular-nums sm:text-sm">
                   {PORTFOLIO_PROFILE.phoneDisplay} | {PORTFOLIO_PROFILE.email} |{" "}
                   {PORTFOLIO_PROFILE.location}
                 </p>
-                <p className="mt-0.5 text-xs text-[#52525B]">
+                <p className="mt-0.5 break-all text-xs text-[#52525B]">
                   LinkedIn: {PORTFOLIO_PROFILE.linkedinUrl}
                 </p>
                 <p className="mt-3 text-xs leading-relaxed text-[#27272A] sm:text-sm">
@@ -232,7 +231,7 @@ export function CvPrintModal({
               </header>
 
               <section className="mt-5">
-                <h3 className="border-b border-[#D4CEC2] pb-1 font-mono text-xs font-bold tracking-wider text-[#171717] uppercase">
+                <h3 className="border-b border-[#D4D2CC] pb-1 text-xs font-bold tracking-wider text-[#18181B] uppercase">
                   {cvLabels.experienceHeading}
                 </h3>
 
@@ -240,12 +239,12 @@ export function CvPrintModal({
                   {cvEntries.map((entry) => (
                     <div key={entry.id}>
                       <div className="flex flex-wrap items-baseline justify-between gap-2">
-                        <h4 className="text-sm font-bold text-[#171717]">{entry.title}</h4>
-                        <span className="font-mono text-xs text-[#52525B] tabular-nums">
+                        <h4 className="text-sm font-bold text-[#18181B]">{entry.title}</h4>
+                        <span className="text-xs font-medium text-[#52525B] tabular-nums">
                           {entry.period}
                         </span>
                       </div>
-                      <p className="text-xs font-medium italic text-[#6B2737]">{entry.role}</p>
+                      <p className="text-xs font-semibold text-[#6B2737]">{entry.role}</p>
                       <ul className="mt-1.5 list-disc space-y-1 pl-4 text-xs leading-relaxed text-[#27272A]">
                         {entry.bullets.map((bullet, idx) => (
                           <li key={idx}>{bullet}</li>
@@ -257,34 +256,34 @@ export function CvPrintModal({
               </section>
 
               <section className="mt-6">
-                <h3 className="border-b border-[#D4CEC2] pb-1 font-mono text-xs font-bold tracking-wider text-[#171717] uppercase">
+                <h3 className="border-b border-[#D4D2CC] pb-1 text-xs font-bold tracking-wider text-[#18181B] uppercase">
                   {cvLabels.educationHeading}
                 </h3>
                 <div className="mt-2 flex flex-wrap items-baseline justify-between gap-2">
                   <div>
-                    <p className="text-sm font-bold text-[#171717]">
+                    <p className="text-sm font-bold text-[#18181B]">
                       {PORTFOLIO_PROFILE.education.university} —{" "}
                       {PORTFOLIO_PROFILE.education.city}
                     </p>
-                    <p className="text-xs italic text-[#3F3F46]">
+                    <p className="text-xs text-[#3F3F46]">
                       {PORTFOLIO_PROFILE.education.degree[cvLang]}, GPA{" "}
                       {PORTFOLIO_PROFILE.education.gpa}
                     </p>
                   </div>
-                  <span className="font-mono text-xs text-[#52525B] tabular-nums">
+                  <span className="text-xs font-medium text-[#52525B] tabular-nums">
                     {PORTFOLIO_PROFILE.education.period}
                   </span>
                 </div>
               </section>
 
               <section className="mt-6">
-                <h3 className="border-b border-[#D4CEC2] pb-1 font-mono text-xs font-bold tracking-wider text-[#171717] uppercase">
+                <h3 className="border-b border-[#D4D2CC] pb-1 text-xs font-bold tracking-wider text-[#18181B] uppercase">
                   {cvLabels.skillsHeading}
                 </h3>
                 <div className="mt-2 space-y-1 text-xs leading-relaxed text-[#27272A]">
                   {SKILL_GROUPS.map((group) => (
                     <p key={group.id}>
-                      <span className="font-semibold text-[#171717]">
+                      <span className="font-semibold text-[#18181B]">
                         {group.title[cvLang]}:{" "}
                       </span>
                       {group.items.map((item) => item.label[cvLang]).join(", ")}

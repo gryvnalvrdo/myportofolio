@@ -6,14 +6,12 @@ import type { Locale } from "@/data/portfolio";
 import { EXPERIENCES } from "@/data/portfolio";
 import { Navbar } from "@/components/Navbar";
 import { HeroSection } from "@/components/HeroSection";
-import { OutsideHighlightsStrip } from "@/components/OutsideHighlightsStrip";
 import {
   ExperienceShowcase,
   type ExperienceFilter,
 } from "@/components/ExperienceShowcase";
 import { ExperienceModal } from "@/components/ExperienceModal";
 import { EntranceSeriesModal } from "@/components/EntranceSeriesModal";
-import { TimelineRunOfShow } from "@/components/TimelineRunOfShow";
 import { SkillsAndEducationSection } from "@/components/SkillsAndEducationSection";
 import { CvPrintModal } from "@/components/CvPrintModal";
 import { ContactFooterSection } from "@/components/ContactFooterSection";
@@ -107,7 +105,7 @@ export default function PortfolioPage() {
 
   return (
     <MotionConfig reducedMotion="user">
-      <div className="min-h-screen bg-[#FAF8F5] text-[#171717]">
+      <div className="min-h-screen bg-[#FAF9F7] text-[#18181B]">
         <Navbar
           locale={locale}
           onChangeLocale={handleChangeLocale}
@@ -118,10 +116,6 @@ export default function PortfolioPage() {
           <HeroSection
             locale={locale}
             onOpenCvModal={() => setIsCvModalOpen(true)}
-          />
-
-          <OutsideHighlightsStrip
-            locale={locale}
             onSelectExperience={handleOpenById}
           />
 
@@ -133,12 +127,6 @@ export default function PortfolioPage() {
             onClearSkillHighlight={() => setHighlightedSkill(null)}
             onOpenExperience={(id) => setSelectedExperienceId(id)}
             onOpenEntranceSeries={() => setIsEntranceOpen(true)}
-          />
-
-          <TimelineRunOfShow
-            locale={locale}
-            onSelectExperience={handleOpenById}
-            onSelectEntrance={() => setIsEntranceOpen(true)}
           />
 
           <SkillsAndEducationSection

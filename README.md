@@ -1,15 +1,15 @@
-# Portofolio Michelle Nathalie — Event Planner & Organizational Leadership
+# Portofolio Michelle Nathalie — Curriculum Vitae & Showcase
 
 Web portofolio dwibahasa (**Bahasa Indonesia & English**) untuk **Michelle Nathalie** (Lulusan S1 Manajemen Universitas Ciputra Makassar, IPK `3.77 / 4.00`), dibangun menggunakan **Next.js (App Router)**, **TypeScript**, **Tailwind CSS**, dan **Framer Motion**, serta dirancang sesuai panduan di [skills.md](./skills.md).
 
 ## Fitur Utama
 - **Dwibahasa Penuh (`ID | EN`)**: Seluruh antarmuka web, ringkasan profil, poin tanggung jawab CV, hingga **CV siap cetak/PDF** dapat diganti antara Bahasa Indonesia dan Bahasa Inggris.
 - **Tata Grid Simetris (Desktop & Mobile)**:
+  - **Hero Seimbang dengan Foto di Luar**: Profil, ringkasan, info akademik, dan tombol aksi sejajar simetris dengan kartu foto portrait + 2 cuplikan dokumentasi acara di halaman depan.
   - **1 Flagship Series Card**: Menggabungkan **ENTRANCE 1.0, 2.0, dan 3.0** dalam satu kartu. Sekali klik langsung menampilkan perbandingan ketiga edisi beserta perbedaan peringkat perannya (`Sponsorship Department` → `Ketua` → `Ketua`).
   - **6 Kartu Pengalaman Simetris**: REKFEST 2.0, Badan Eksekutif Mahasiswa (BEM), Himpunan Mahasiswa Manajemen, Seminar Bela Negara & Anti Narkoba 2025, Orientation Week UC Makassar, dan FLAMIANS 1.0 — tampil ringkas di luar, dan terbuka berdampingan (**Teks + Galeri Foto**) saat diklik.
-  - **4 Frame Sorotan Foto di Luar**: Menampilkan sorotan visual langsung di halaman utama sebelum pengunjung membuka detail kartu.
-- **Linimasa Run-of-Show (`2022–2026`) & Filter Kompetensi Interaktif**: Memvisualisasikan peran yang berjalan beriringan dan menyorot pengalaman berdasarkan kompetensi (`Hard Skills` & `Soft Skills`).
-- **CV Siap Cetak HR (`ID / EN`)**: Fitur *Lihat / Cetak CV* untuk membaca dan menyimpan CV resmi ke PDF dalam dua bahasa.
+  - **Drawer Navigasi Mobile Slide-Kiri**: Menu mobile muncul meluncur halus dari sisi kiri saat tombol garis 3 ditekan.
+- **Filter Kompetensi Interaktif & CV Siap Cetak HR (`ID / EN`)**: Sorot pengalaman terkait dengan klik pill kompetensi, serta buka *Lihat / Cetak CV* untuk membaca dan menyimpan CV resmi ke PDF dalam dua bahasa.
 
 ## Cara Menambahkan Foto Asli
 Saat ini seluruh slot foto menggunakan placeholder arsitektural terstruktur agar tata letak tetap rapi sebelum foto diberikan. Ketika foto sudah tersedia:

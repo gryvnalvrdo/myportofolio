@@ -66,7 +66,7 @@ export function EntranceSeriesModal({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[#171717]/65 p-3 backdrop-blur-xs sm:p-6"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[#18181B]/65 p-3 backdrop-blur-xs sm:p-6"
           onClick={onClose}
         >
           <motion.div
@@ -75,23 +75,23 @@ export function EntranceSeriesModal({
             exit={{ opacity: 0, y: 12, scale: 0.98 }}
             transition={{ duration: 0.22 }}
             onClick={(e) => e.stopPropagation()}
-            className="flex max-h-[92vh] w-full max-w-6xl flex-col overflow-hidden rounded-2xl border border-[#DCD6CA] bg-[#FAF8F5] shadow-2xl"
+            className="flex max-h-[92vh] w-full max-w-6xl flex-col overflow-hidden rounded-2xl border border-[#DCDAD3] bg-[#FAF9F7] shadow-2xl"
           >
             {/* Header Toolbar */}
-            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#E5E0D6] bg-white px-4 py-4 sm:px-6">
+            <div className="flex items-start justify-between gap-3 border-b border-[#E4E2DC] bg-white px-4 py-4 sm:items-center sm:px-6">
               <div>
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[#F7EFF1] px-2.5 py-0.5 font-mono text-[11px] font-medium text-[#6B2737]">
+                  <span className="inline-flex items-center gap-1.5 rounded-md bg-[#F7EFF1] px-2.5 py-0.5 text-[11px] font-semibold text-[#6B2737]">
                     <Layers className="h-3.5 w-3.5" aria-hidden="true" />
-                    {ENTRANCE_SERIES.shortCode}
+                    {copy.experiences.seriesBadge}
                   </span>
-                  <span className="font-mono text-xs text-[#52525B] tabular-nums">
+                  <span className="text-xs font-medium text-[#52525B] tabular-nums">
                     {ENTRANCE_SERIES.period}
                   </span>
                 </div>
                 <h2
                   id="entrance-series-title"
-                  className="mt-1.5 font-serif text-xl font-medium text-[#171717] sm:text-2xl"
+                  className="font-display mt-1.5 text-lg font-bold text-[#18181B] sm:text-2xl"
                 >
                   {ENTRANCE_SERIES.title[locale]}
                 </h2>
@@ -101,26 +101,26 @@ export function EntranceSeriesModal({
                 type="button"
                 onClick={onClose}
                 aria-label={copy.modal.close}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#DCD6CA] bg-[#FAF8F5] text-[#171717] transition-colors hover:bg-[#171717] hover:text-[#FAF8F5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6B2737]"
+                className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#DCDAD3] bg-[#FAF9F7] text-[#18181B] transition-colors hover:bg-[#18181B] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6B2737]"
               >
                 <X className="h-4 w-4" aria-hidden="true" />
               </button>
             </div>
 
-            {/* Edition Switcher Bar (View All 3 Simultaneously or Focus Individual) */}
-            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#E5E0D6] bg-[#F3EFE8] px-4 py-3 sm:px-6">
-              <span className="font-mono text-[11px] font-medium tracking-wider text-[#52525B] uppercase">
+            {/* Edition Switcher Bar */}
+            <div className="flex flex-col gap-2.5 border-b border-[#E4E2DC] bg-[#F3F1ED] px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+              <span className="text-[11px] font-semibold tracking-wider text-[#52525B] uppercase">
                 {copy.modal.editionComparisonTitle}
               </span>
 
-              <div className="flex flex-wrap items-center gap-1.5">
+              <div className="grid grid-cols-2 gap-1.5 sm:flex sm:flex-wrap sm:items-center">
                 <button
                   type="button"
                   onClick={() => setSelectedEdition("all")}
-                  className={`min-h-[34px] rounded-full px-3.5 text-xs font-medium transition-colors ${
+                  className={`min-h-[34px] rounded-lg px-3 text-xs font-semibold transition-colors ${
                     selectedEdition === "all"
-                      ? "bg-[#171717] text-[#FAF8F5]"
-                      : "border border-[#DCD6CA] bg-white text-[#52525B] hover:text-[#171717]"
+                      ? "bg-[#18181B] text-white"
+                      : "border border-[#DCDAD3] bg-white text-[#52525B] hover:text-[#18181B]"
                   }`}
                 >
                   {copy.modal.allEditionsTab}
@@ -130,41 +130,41 @@ export function EntranceSeriesModal({
                     key={edition.id}
                     type="button"
                     onClick={() => setSelectedEdition(edition.id)}
-                    className={`min-h-[34px] rounded-full px-3.5 text-xs font-medium transition-colors ${
+                    className={`min-h-[34px] rounded-lg px-3 text-xs font-semibold transition-colors ${
                       selectedEdition === edition.id
-                        ? "bg-[#6B2737] text-[#FAF8F5]"
-                        : "border border-[#DCD6CA] bg-white text-[#52525B] hover:text-[#171717]"
+                        ? "bg-[#6B2737] text-white"
+                        : "border border-[#DCDAD3] bg-white text-[#52525B] hover:text-[#18181B]"
                     }`}
                   >
-                    {edition.editionLabel} · {edition.roleTitle[locale]}
+                    {edition.editionLabel}
                   </button>
                 ))}
               </div>
             </div>
 
             {/* Scrollable Body showing all 3 Rank-Differentiated Editions */}
-            <div className="space-y-6 overflow-y-auto p-4 sm:p-6">
+            <div className="space-y-5 overflow-y-auto p-4 sm:p-6">
               {visibleEditions.map((edition) => {
                 const tierStyles =
                   edition.rankTier === 3
                     ? {
-                        cardBorder: "border-[#6B2737]/45",
-                        badgeBg: "bg-[#6B2737] text-[#FAF8F5]",
+                        cardBorder: "border-[#6B2737]/40",
+                        badgeBg: "bg-[#6B2737] text-white",
                         accentText: "text-[#6B2737]",
                         headerBg: "bg-[#F7EFF1]/80",
                       }
                     : edition.rankTier === 2
                       ? {
-                          cardBorder: "border-[#8A6238]/40",
-                          badgeBg: "bg-[#8A6238] text-[#FAF8F5]",
+                          cardBorder: "border-[#8A6238]/35",
+                          badgeBg: "bg-[#8A6238] text-white",
                           accentText: "text-[#7A5129]",
                           headerBg: "bg-[#F7F1E8]/80",
                         }
                       : {
-                          cardBorder: "border-[#D4CEC2]",
-                          badgeBg: "bg-[#3F3F46] text-[#FAF8F5]",
+                          cardBorder: "border-[#D4D2CC]",
+                          badgeBg: "bg-[#3F3F46] text-white",
                           accentText: "text-[#3F3F46]",
-                          headerBg: "bg-[#F3EFE8]",
+                          headerBg: "bg-[#F3F1ED]",
                         };
 
                 return (
@@ -174,30 +174,30 @@ export function EntranceSeriesModal({
                   >
                     {/* Edition Rank Banner */}
                     <div
-                      className={`flex flex-wrap items-center justify-between gap-3 border-b border-[#E5E0D6] px-4 py-3.5 sm:px-6 ${tierStyles.headerBg}`}
+                      className={`flex flex-wrap items-center justify-between gap-2 border-b border-[#E4E2DC] px-4 py-3 sm:px-6 ${tierStyles.headerBg}`}
                     >
-                      <div className="flex flex-wrap items-center gap-2.5">
+                      <div className="flex flex-wrap items-center gap-2">
                         <span
-                          className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-mono text-[11px] font-semibold ${tierStyles.badgeBg}`}
+                          className={`inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-[11px] font-semibold ${tierStyles.badgeBg}`}
                         >
                           <Award className="h-3.5 w-3.5" aria-hidden="true" />
                           {edition.rankBadge[locale]}
                         </span>
-                        <h3 className="font-serif text-xl font-medium text-[#171717]">
+                        <h3 className="font-display text-lg font-bold text-[#18181B]">
                           {edition.editionLabel}
                         </h3>
-                        <span className={`text-sm font-semibold ${tierStyles.accentText}`}>
+                        <span className={`text-xs font-semibold sm:text-sm ${tierStyles.accentText}`}>
                           — {edition.roleTitle[locale]}
                         </span>
                       </div>
 
-                      <span className="font-mono text-xs font-medium text-[#52525B] tabular-nums">
+                      <span className="text-xs font-medium text-[#52525B] tabular-nums">
                         {edition.period}
                       </span>
                     </div>
 
                     {/* Split Content: Text Left + Photos Right */}
-                    <div className="grid grid-cols-1 gap-6 p-4 sm:p-6 lg:grid-cols-12">
+                    <div className="grid grid-cols-1 gap-5 p-4 sm:p-6 lg:grid-cols-12">
                       <div className="lg:col-span-6">
                         {edition.umbrella && (
                           <p className="mb-3 text-xs font-medium text-[#52525B]">
@@ -205,13 +205,21 @@ export function EntranceSeriesModal({
                           </p>
                         )}
 
-                        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
+                        <div
+                          className={`grid gap-2.5 ${
+                            edition.metrics.length === 1
+                              ? "grid-cols-1"
+                              : edition.metrics.length === 2
+                                ? "grid-cols-2"
+                                : "grid-cols-3"
+                          }`}
+                        >
                           {edition.metrics.map((metric) => (
                             <div
                               key={`${edition.id}-${metric.value}`}
-                              className="rounded-xl border border-[#E5E0D6] bg-[#FAF8F5] p-3"
+                              className="rounded-xl border border-[#E4E2DC] bg-[#FAF9F7] p-3"
                             >
-                              <p className="font-mono text-base font-semibold text-[#171717] tabular-nums">
+                              <p className="text-sm font-bold text-[#18181B] tabular-nums sm:text-base">
                                 {metric.value}
                               </p>
                               <p className="mt-0.5 text-[11px] text-[#52525B]">
@@ -221,14 +229,14 @@ export function EntranceSeriesModal({
                           ))}
                         </div>
 
-                        <ul className="mt-4 space-y-2.5">
+                        <ul className="mt-4 space-y-2">
                           {edition.responsibilities[locale].map((bullet, idx) => (
                             <li
                               key={idx}
-                              className="flex items-start gap-3 rounded-xl border border-[#EFECE4] bg-[#FAF8F5] p-3 text-sm leading-relaxed text-[#27272A]"
+                              className="flex items-start gap-3 rounded-xl border border-[#ECEAE4] bg-[#FAF9F7] p-3 text-sm leading-relaxed text-[#27272A]"
                             >
                               <span
-                                className={`mt-0.5 font-mono text-xs font-semibold tabular-nums ${tierStyles.accentText}`}
+                                className={`mt-0.5 text-xs font-bold tabular-nums ${tierStyles.accentText}`}
                               >
                                 0{idx + 1}
                               </span>
@@ -266,7 +274,7 @@ export function EntranceSeriesModal({
           {/* Zoom Lightbox */}
           {zoomedSlot && isSafeLocalAssetPath(zoomedSlot.src) && (
             <div
-              className="fixed inset-0 z-[60] flex items-center justify-center bg-[#171717]/90 p-4"
+              className="fixed inset-0 z-[60] flex items-center justify-center bg-[#18181B]/90 p-4"
               onClick={(e) => {
                 e.stopPropagation();
                 setZoomedSlot(null);
@@ -276,7 +284,7 @@ export function EntranceSeriesModal({
                 type="button"
                 onClick={() => setZoomedSlot(null)}
                 aria-label={copy.modal.close}
-                className="absolute top-4 right-4 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-[#171717]"
+                className="absolute top-4 right-4 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-[#18181B]"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -291,7 +299,7 @@ export function EntranceSeriesModal({
                   sizes="90vw"
                   className="object-contain"
                 />
-                <p className="absolute inset-x-0 -bottom-8 text-center text-sm text-[#FAF8F5]">
+                <p className="absolute inset-x-0 -bottom-8 text-center text-sm text-white">
                   {zoomedSlot.caption[locale]}
                 </p>
               </div>

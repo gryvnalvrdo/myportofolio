@@ -47,70 +47,56 @@ export function EventMediaFrame({
         className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
       />
       {showCaptionOverlay && (
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#171717]/80 via-[#171717]/35 to-transparent p-3.5 text-left">
-          <p className="line-clamp-2 text-xs font-medium text-[#FAF8F5]">
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#18181B]/80 via-[#18181B]/35 to-transparent p-3.5 text-left">
+          <p className="line-clamp-2 text-xs font-medium text-white">
             {slot.caption[locale]}
           </p>
         </div>
       )}
       {onZoom && (
-        <span className="absolute top-2.5 right-2.5 inline-flex items-center gap-1 rounded-full bg-[#171717]/75 px-2.5 py-1 font-mono text-[10px] text-[#FAF8F5] opacity-0 backdrop-blur-xs transition-opacity group-hover:opacity-100">
+        <span className="absolute top-2.5 right-2.5 inline-flex items-center gap-1 rounded-full bg-[#18181B]/75 px-2.5 py-1 text-[11px] font-medium text-white opacity-0 backdrop-blur-xs transition-opacity group-hover:opacity-100">
           <Maximize2 className="h-3 w-3" aria-hidden="true" />
           {copy.modal.zoomPhoto}
         </span>
       )}
     </>
   ) : (
-    <div className="media-slot-grid relative flex h-full w-full flex-col justify-between p-3.5 sm:p-4">
-      {/* Subtle architectural corner registration marks */}
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute top-2.5 left-2.5 h-3 w-3 border-t border-l border-[#6B2737]/35"
-      />
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute top-2.5 right-2.5 h-3 w-3 border-t border-r border-[#6B2737]/35"
-      />
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute bottom-2.5 left-2.5 h-3 w-3 border-b border-l border-[#6B2737]/35"
-      />
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute right-2.5 bottom-2.5 h-3 w-3 border-r border-b border-[#6B2737]/35"
-      />
-
+    <div className="media-slot-grid relative flex h-full w-full flex-col justify-between p-3 sm:p-4">
       <div className="flex items-center justify-between gap-2">
-        <span className="inline-flex items-center gap-1.5 rounded-sm border border-[#DCD6CA] bg-[#FAF8F5]/90 px-2 py-0.5 font-mono text-[10px] font-medium tracking-wider text-[#52525B] uppercase">
-          <Camera className="h-3 w-3 text-[#6B2737]" aria-hidden="true" />
-          {slot.slotCode}
+        <span className="inline-flex min-w-0 items-center gap-1.5 truncate rounded-md border border-[#E4E2DC] bg-white/90 px-2 py-0.5 text-[10px] font-semibold tracking-wide text-[#52525B] uppercase">
+          <Camera className="h-3 w-3 shrink-0 text-[#6B2737]" aria-hidden="true" />
+          <span className="truncate">{slot.slotCode}</span>
         </span>
-        <span className="rounded-sm bg-[#FAF8F5]/85 px-1.5 py-0.5 font-mono text-[10px] text-[#71717A]">
+        <span className="shrink-0 rounded-md bg-white/85 px-1.5 py-0.5 text-[10px] font-medium text-[#71717A] tabular-nums">
           {slot.aspect.replace("/", ":")}
         </span>
       </div>
 
-      <div className="my-auto py-2 text-center">
-        <p className="font-mono text-[10px] tracking-[0.16em] text-[#6B2737] uppercase">
+      <div className="my-auto py-1 text-center">
+        <p className="text-[11px] font-semibold tracking-wide text-[#6B2737] uppercase">
           {copy.placeholder.awaitingPhoto}
         </p>
         {!compact && (
-          <p className="mx-auto mt-1 max-w-[26ch] text-xs leading-snug text-[#52525B]">
+          <p className="mx-auto mt-1 max-w-[28ch] text-xs leading-snug text-[#52525B]">
             {slot.caption[locale]}
           </p>
         )}
       </div>
 
-      <div className="flex items-center justify-between border-t border-[#E5E0D6]/80 pt-1.5 font-mono text-[10px] text-[#71717A]">
-        <span>/public/images/</span>
-        <span>
-          {copy.placeholder.aspectLabel} {slot.aspect.replace("/", ":")}
-        </span>
-      </div>
+      {!compact ? (
+        <div className="flex items-center justify-between border-t border-[#E4E2DC]/80 pt-1.5 text-[10px] font-medium text-[#71717A]">
+          <span>/public/images/</span>
+          <span>
+            {copy.placeholder.aspectLabel} {slot.aspect.replace("/", ":")}
+          </span>
+        </div>
+      ) : (
+        <div className="h-1" aria-hidden="true" />
+      )}
     </div>
   );
 
-  const baseClass = `group relative w-full overflow-hidden rounded-xl border border-[#E5E0D6] bg-[#F4F0E8] ${ASPECT_CLASSES[slot.aspect]} ${className}`;
+  const baseClass = `group relative w-full overflow-hidden rounded-xl border border-[#E4E2DC] bg-[#F3F1ED] ${ASPECT_CLASSES[slot.aspect]} ${className}`;
 
   if (onZoom && hasRealImage) {
     return (

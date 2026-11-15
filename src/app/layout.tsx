@@ -1,24 +1,17 @@
 import type { Metadata, Viewport } from "next";
-import { JetBrains_Mono, Newsreader, Plus_Jakarta_Sans } from "next/font/google";
+import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import { getSiteUrl } from "@/lib/site-url";
 import "./globals.css";
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-plus-jakarta",
+  variable: "--font-display",
   display: "swap",
 });
 
-const newsreader = Newsreader({
+const inter = Inter({
   subsets: ["latin"],
-  style: ["normal", "italic"],
-  variable: "--font-newsreader",
-  display: "swap",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-jetbrains-mono",
+  variable: "--font-sans",
   display: "swap",
 });
 
@@ -26,27 +19,28 @@ const siteUrl = getSiteUrl();
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Michelle Nathalie — Event Planner & Organizational Leadership Portfolio",
+  title: "Michelle Nathalie — Portfolio & Curriculum Vitae",
   description:
-    "Portofolio faktual Michelle Nathalie (S1 Manajemen Universitas Ciputra Makassar, IPK 3.77/4.00) — pengalaman kepemimpinan BEM, Himpunan Mahasiswa Manajemen, REKFEST 2.0, dan seri ENTRANCE 1.0–3.0.",
+    "Portofolio dan CV Michelle Nathalie (S1 Manajemen Universitas Ciputra Makassar, IPK 3.77/4.00) — pengalaman kepemimpinan organisasi, manajemen acara, REKFEST 2.0, dan seri ENTRANCE 1.0–3.0.",
   keywords: [
     "Michelle Nathalie",
-    "Event Planner Makassar",
+    "Event Planner",
     "Event Management",
+    "Project Management",
     "Universitas Ciputra Makassar",
     "REKFEST 2.0",
     "ENTRANCE",
-    "Portfolio",
+    "Makassar",
   ],
   authors: [{ name: "Michelle Nathalie" }],
   openGraph: {
-    title: "Michelle Nathalie — Event Planner & Organizational Leadership",
+    title: "Michelle Nathalie — Portfolio & Curriculum Vitae",
     description:
-      "Rekam jejak terstruktur kepemimpinan organisasi dan manajemen acara berskala hingga 30.000+ pengunjung di Makassar, Indonesia.",
+      "Lulusan S1 Manajemen Universitas Ciputra Makassar dengan rekam jejak kepemimpinan organisasi dan manajemen acara berskala hingga 30.000+ pengunjung.",
     type: "website",
     locale: "id_ID",
     alternateLocale: ["en_US"],
-    siteName: "Michelle Nathalie Portfolio",
+    siteName: "Michelle Nathalie",
   },
   robots: {
     index: true,
@@ -55,7 +49,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#FAF8F5",
+  themeColor: "#FAF9F7",
   width: "device-width",
   initialScale: 1,
 };
@@ -66,11 +60,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="id"
-      className={`${plusJakarta.variable} ${newsreader.variable} ${jetbrainsMono.variable}`}
-    >
-      <body className="min-h-screen bg-[#FAF8F5] text-[#171717] antialiased selection:bg-[#6B2737] selection:text-[#FAF8F5]">
+    <html lang="id" className={`${plusJakarta.variable} ${inter.variable}`}>
+      <body className="min-h-screen bg-[#FAF9F7] text-[#18181B] antialiased selection:bg-[#6B2737] selection:text-[#FAF9F7]">
         {children}
       </body>
     </html>

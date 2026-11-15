@@ -1,18 +1,17 @@
 @import "tailwindcss";
 
 @theme inline {
-  --font-sans: var(--font-plus-jakarta), ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-serif: var(--font-newsreader), Georgia, Cambria, serif;
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-display), var(--font-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
-  --bg-canvas: #faf8f5;
-  --bg-subtle: #f3efe8;
+  --bg-canvas: #faf9f7;
+  --bg-subtle: #f3f1ed;
   --bg-card: #ffffff;
-  --ink-primary: #171717;
+  --ink-primary: #18181b;
   --ink-secondary: #52525b;
-  --border-hairline: #e5e0d6;
+  --border-hairline: #e4e2dc;
   --accent-primary: #6b2737;
   --accent-hover: #531d2a;
 }
@@ -32,12 +31,16 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Intentional architectural contact-sheet grid for photo slots */
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Clean architectural placeholder pattern for pending photos */
 .media-slot-grid {
-  background-color: #f4f0e8;
+  background-color: #f3f1ed;
   background-image:
-    linear-gradient(to right, rgba(107, 39, 55, 0.055) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(107, 39, 55, 0.055) 1px, transparent 1px);
+    linear-gradient(to right, rgba(24, 24, 27, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(24, 24, 27, 0.04) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
