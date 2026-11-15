@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-plus-jakarta), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-serif: var(--font-newsreader), Georgia, Cambria, serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
+:root {
+  --bg-canvas: #faf8f5;
+  --bg-subtle: #f3efe8;
+  --bg-card: #ffffff;
+  --ink-primary: #171717;
+  --ink-secondary: #52525b;
+  --border-hairline: #e5e0d6;
+  --accent-primary: #6b2737;
+  --accent-hover: #531d2a;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-canvas);
+  color: var(--ink-primary);
+}
+
+body {
+  background-color: var(--bg-canvas);
+  color: var(--ink-primary);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Intentional architectural contact-sheet grid for photo slots */
+.media-slot-grid {
+  background-color: #f4f0e8;
+  background-image:
+    linear-gradient(to right, rgba(107, 39, 55, 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(107, 39, 55, 0.055) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Clean print support when printing the bilingual CV modal */
+@media print {
+  html[data-print-mode="cv"] body > *:not(#cv-print-portal) {
+    display: none !important;
+  }
+
+  html[data-print-mode="cv"] #cv-print-portal {
+    position: static !important;
+    inset: auto !important;
+    background: #ffffff !important;
+    padding: 0 !important;
+  }
+
+  html[data-print-mode="cv"] .cv-print-hide {
+    display: none !important;
+  }
+
+  html[data-print-mode="cv"] .cv-print-paper {
+    box-shadow: none !important;
+    border: none !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+  }
+}
