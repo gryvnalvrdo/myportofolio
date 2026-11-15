@@ -12,7 +12,7 @@ import { EventMediaFrame } from "./EventMediaFrame";
 interface EventPhotoGalleryProps {
   slots: MediaSlot[];
   locale: Locale;
-  onZoom: (slot: MediaSlot) => void;
+  onZoom: (slot: MediaSlot, gallerySlots: MediaSlot[]) => void;
   sizes?: string;
 }
 
@@ -55,7 +55,7 @@ export function EventPhotoGallery({
             <EventMediaFrame
               slot={currentSlot}
               locale={locale}
-              onZoom={onZoom}
+              onZoom={(slot) => onZoom(slot, activeSlots)}
               sizes={sizes}
             />
           </motion.div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ComponentType } from "react";
 import {
   ArrowUpRight,
   Check,
@@ -15,6 +15,7 @@ import type { Locale } from "@/data/portfolio";
 import { PORTFOLIO_PROFILE } from "@/data/portfolio";
 import { UI_COPY } from "@/data/i18n";
 import { getSafeContactHref, getSafeExternalHref } from "@/lib/security";
+import { LinkedInIcon } from "./LinkedInIcon";
 
 interface ContactFooterSectionProps {
   locale: Locale;
@@ -52,7 +53,7 @@ export function ContactFooterSection({ locale, onOpenCvModal }: ContactFooterSec
     external?: boolean;
     tabular?: boolean;
     breakValue?: boolean;
-    Icon: typeof Mail;
+    Icon: ComponentType<{ className?: string }>;
   }[] = [
     {
       id: "email",
@@ -74,7 +75,7 @@ export function ContactFooterSection({ locale, onOpenCvModal }: ContactFooterSec
       actionLabel: copy.contact.openLinkedIn,
       href: linkedInHref,
       external: true,
-      Icon: ExternalLink,
+      Icon: LinkedInIcon,
     },
     {
       id: "phone",
@@ -104,9 +105,6 @@ export function ContactFooterSection({ locale, onOpenCvModal }: ContactFooterSec
             <h2 className="font-display mt-2 text-2xl font-bold tracking-tight text-white sm:text-3xl">
               {copy.contact.heading}
             </h2>
-            <p className="mt-2.5 max-w-2xl text-sm leading-relaxed text-[#C4C4CC] sm:text-base">
-              {copy.contact.subheading}
-            </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-3 lg:col-span-4 lg:justify-end">

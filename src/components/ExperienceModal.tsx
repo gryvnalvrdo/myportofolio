@@ -1,13 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import Image from "next/image";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import type { ExperienceItem, Locale, MediaSlot } from "@/data/portfolio";
 import { UI_COPY } from "@/data/i18n";
-import { isSafeLocalAssetPath } from "@/lib/security";
 import { EventPhotoGallery } from "./EventPhotoGallery";
+import { PhotoLightbox } from "./PhotoLightbox";
 
 interface ExperienceModalProps {
   experience: ExperienceItem | null;
@@ -25,6 +24,7 @@ export function ExperienceModal({
   onNext,
 }: ExperienceModalProps) {
   const [zoomedSlot, setZoomedSlot] = useState<MediaSlot | null>(null);
+  const [zoomSlots, setZoomSlots] = useState<MediaSlot[]>([]);
   const copy = UI_COPY[locale];
 
   const allSlots = useMemo(() => {
@@ -32,37 +32,21 @@ export function ExperienceModal({
     return [experience.coverSlot, ...experience.gallerySlots];
   }, [experience]);
 
-  const realSlots = useMemo(
-    () => allSlots.filter((slot) => isSafeLocalAssetPath(slot.src)),
-    [allSlots]
-  );
+  const handleClose = useCallback(() => {
+    setZoomedSlot(null);
+    onClose();
+  }, [onClose]);
 
   useEffect(() => {
     if (!experience) return;
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        if (zoomedSlot) {
-          setZoomedSlot(null);
-        } else {
-          onClose();
-        }
+        handleClose();
       } else if (event.key === "ArrowLeft") {
-        if (zoomedSlot && realSlots.length > 1) {
-          const idx = realSlots.findIndex((s) => s.id === zoomedSlot.id);
-          const next = realSlots[(idx - 1 + realSlots.length) % realSlots.length];
-          if (next) setZoomedSlot(next);
-        } else if (!zoomedSlot) {
-          onPrev();
-        }
+        onPrev();
       } else if (event.key === "ArrowRight") {
-        if (zoomedSlot && realSlots.length > 1) {
-          const idx = realSlots.findIndex((s) => s.id === zoomedSlot.id);
-          const next = realSlots[(idx + 1) % realSlots.length];
-          if (next) setZoomedSlot(next);
-        } else if (!zoomedSlot) {
-          onNext();
-        }
+        onNext();
       }
     };
 
@@ -74,7 +58,7 @@ export function ExperienceModal({
       window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = originalOverflow;
     };
-  }, [experience, zoomedSlot, realSlots, onClose, onPrev, onNext]);
+  }, [experience, handleClose, onPrev, onNext]);
 
   return (
     <AnimatePresence>
@@ -88,7 +72,7 @@ export function ExperienceModal({
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
           className="fixed inset-0 z-50 flex items-center justify-center bg-[#18181B]/65 p-3 backdrop-blur-xs sm:p-6"
-          onClick={onClose}
+          onClick={handleClose}
         >
           <motion.div
             initial={{ opacity: 0, y: 16, scale: 0.98 }}
@@ -131,7 +115,7 @@ export function ExperienceModal({
                 </button>
                 <button
                   type="button"
-                  onClick={onClose}
+                  onClick={handleClose}
                   aria-label={copy.modal.close}
                   className="ml-1 inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#DCDAD3] bg-[#FAF9F7] text-[#18181B] transition-colors hover:bg-[#18181B] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6B2737]"
                 >
@@ -236,7 +220,10 @@ export function ExperienceModal({
                     <EventPhotoGallery
                       slots={allSlots}
                       locale={locale}
-                      onZoom={setZoomedSlot}
+                      onZoom={(slot, gallerySlots) => {
+                        setZoomedSlot(slot);
+                        setZoomSlots(gallerySlots);
+                      }}
                     />
                   </div>
                 </motion.div>
@@ -244,72 +231,13 @@ export function ExperienceModal({
             </div>
           </motion.div>
 
-          {/* Fullscreen Photo Lightbox with Next/Prev */}
-          {zoomedSlot && isSafeLocalAssetPath(zoomedSlot.src) && (
-            <div
-              className="fixed inset-0 z-[60] flex items-center justify-center bg-[#18181B]/92 p-4"
-              onClick={(e) => {
-                e.stopPropagation();
-                setZoomedSlot(null);
-              }}
-            >
-              <button
-                type="button"
-                onClick={() => setZoomedSlot(null)}
-                aria-label={copy.modal.close}
-                className="absolute top-4 right-4 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-[#18181B]"
-              >
-                <X className="h-5 w-5" />
-              </button>
-
-              {realSlots.length > 1 && (
-                <>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      const idx = realSlots.findIndex((s) => s.id === zoomedSlot.id);
-                      const prev = realSlots[(idx - 1 + realSlots.length) % realSlots.length];
-                      if (prev) setZoomedSlot(prev);
-                    }}
-                    aria-label={copy.modal.galleryPrevPhoto}
-                    className="absolute left-3 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-[#18181B] hover:bg-white sm:left-6"
-                  >
-                    <ChevronLeft className="h-5 w-5" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      const idx = realSlots.findIndex((s) => s.id === zoomedSlot.id);
-                      const next = realSlots[(idx + 1) % realSlots.length];
-                      if (next) setZoomedSlot(next);
-                    }}
-                    aria-label={copy.modal.galleryNextPhoto}
-                    className="absolute right-3 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-[#18181B] hover:bg-white sm:right-6"
-                  >
-                    <ChevronRight className="h-5 w-5" />
-                  </button>
-                </>
-              )}
-
-              <div
-                className="relative h-[78vh] w-full max-w-4xl"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <Image
-                  src={zoomedSlot.src}
-                  alt={zoomedSlot.alt[locale]}
-                  fill
-                  sizes="90vw"
-                  className="object-contain"
-                />
-                <p className="absolute inset-x-0 -bottom-8 text-center text-sm text-white">
-                  {zoomedSlot.caption[locale]}
-                </p>
-              </div>
-            </div>
-          )}
+          <PhotoLightbox
+            activeSlot={zoomedSlot}
+            slots={zoomSlots}
+            locale={locale}
+            onSelectSlot={setZoomedSlot}
+            onClose={() => setZoomedSlot(null)}
+          />
         </motion.div>
       )}
     </AnimatePresence>

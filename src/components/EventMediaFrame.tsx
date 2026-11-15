@@ -86,8 +86,16 @@ export function EventMediaFrame({
       {!compact ? (
         <div className="flex items-center justify-between border-t border-[#E4E2DC]/80 pt-1.5 text-[10px] font-medium text-[#71717A]">
           <span>/public/images/</span>
-          <span>
-            {copy.placeholder.aspectLabel} {slot.aspect.replace("/", ":")}
+          <span className="inline-flex items-center gap-1.5">
+            {onZoom && (
+              <span className="inline-flex items-center gap-1 rounded bg-white/90 px-1.5 py-0.5 text-[10px] font-semibold text-[#6B2737]">
+                <Maximize2 className="h-2.5 w-2.5" aria-hidden="true" />
+                {copy.modal.zoomPhoto}
+              </span>
+            )}
+            <span>
+              {copy.placeholder.aspectLabel} {slot.aspect.replace("/", ":")}
+            </span>
           </span>
         </div>
       ) : (
@@ -98,7 +106,7 @@ export function EventMediaFrame({
 
   const baseClass = `group relative w-full overflow-hidden rounded-xl border border-[#E4E2DC] bg-[#F3F1ED] ${ASPECT_CLASSES[slot.aspect]} ${className}`;
 
-  if (onZoom && hasRealImage) {
+  if (onZoom) {
     return (
       <button
         type="button"

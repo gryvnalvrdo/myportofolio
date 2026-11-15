@@ -1,14 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Image from "next/image";
+import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Award, Layers, X } from "lucide-react";
 import type { EntranceEdition, Locale, MediaSlot } from "@/data/portfolio";
 import { ENTRANCE_SERIES } from "@/data/portfolio";
 import { UI_COPY } from "@/data/i18n";
-import { isSafeLocalAssetPath } from "@/lib/security";
 import { EventPhotoGallery } from "./EventPhotoGallery";
+import { PhotoLightbox } from "./PhotoLightbox";
 
 interface EntranceSeriesModalProps {
   isOpen: boolean;
@@ -25,18 +24,20 @@ export function EntranceSeriesModal({
 }: EntranceSeriesModalProps) {
   const [selectedEdition, setSelectedEdition] = useState<EditionFilter>("all");
   const [zoomedSlot, setZoomedSlot] = useState<MediaSlot | null>(null);
+  const [zoomSlots, setZoomSlots] = useState<MediaSlot[]>([]);
   const copy = UI_COPY[locale];
+
+  const handleClose = useCallback(() => {
+    setZoomedSlot(null);
+    onClose();
+  }, [onClose]);
 
   useEffect(() => {
     if (!isOpen) return;
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        if (zoomedSlot) {
-          setZoomedSlot(null);
-        } else {
-          onClose();
-        }
+        handleClose();
       }
     };
 
@@ -48,7 +49,7 @@ export function EntranceSeriesModal({
       window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = originalOverflow;
     };
-  }, [isOpen, zoomedSlot, onClose]);
+  }, [isOpen, handleClose]);
 
   const visibleEditions =
     selectedEdition === "all"
@@ -67,7 +68,7 @@ export function EntranceSeriesModal({
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
           className="fixed inset-0 z-50 flex items-center justify-center bg-[#18181B]/65 p-3 backdrop-blur-xs sm:p-6"
-          onClick={onClose}
+          onClick={handleClose}
         >
           <motion.div
             initial={{ opacity: 0, y: 16, scale: 0.98 }}
@@ -99,7 +100,7 @@ export function EntranceSeriesModal({
 
               <button
                 type="button"
-                onClick={onClose}
+                onClick={handleClose}
                 aria-label={copy.modal.close}
                 className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#DCDAD3] bg-[#FAF9F7] text-[#18181B] transition-colors hover:bg-[#18181B] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6B2737]"
               >
@@ -250,7 +251,10 @@ export function EntranceSeriesModal({
                         <EventPhotoGallery
                           slots={[edition.coverSlot, ...edition.gallerySlots]}
                           locale={locale}
-                          onZoom={setZoomedSlot}
+                          onZoom={(slot, gallerySlots) => {
+                            setZoomedSlot(slot);
+                            setZoomSlots(gallerySlots);
+                          }}
                           sizes="(max-width: 1024px) 100vw, 480px"
                         />
                       </div>
@@ -261,40 +265,13 @@ export function EntranceSeriesModal({
             </div>
           </motion.div>
 
-          {/* Zoom Lightbox */}
-          {zoomedSlot && isSafeLocalAssetPath(zoomedSlot.src) && (
-            <div
-              className="fixed inset-0 z-[60] flex items-center justify-center bg-[#18181B]/92 p-4"
-              onClick={(e) => {
-                e.stopPropagation();
-                setZoomedSlot(null);
-              }}
-            >
-              <button
-                type="button"
-                onClick={() => setZoomedSlot(null)}
-                aria-label={copy.modal.close}
-                className="absolute top-4 right-4 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-[#18181B]"
-              >
-                <X className="h-5 w-5" />
-              </button>
-              <div
-                className="relative h-[78vh] w-full max-w-4xl"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <Image
-                  src={zoomedSlot.src}
-                  alt={zoomedSlot.alt[locale]}
-                  fill
-                  sizes="90vw"
-                  className="object-contain"
-                />
-                <p className="absolute inset-x-0 -bottom-8 text-center text-sm text-white">
-                  {zoomedSlot.caption[locale]}
-                </p>
-              </div>
-            </div>
-          )}
+          <PhotoLightbox
+            activeSlot={zoomedSlot}
+            slots={zoomSlots}
+            locale={locale}
+            onSelectSlot={setZoomedSlot}
+            onClose={() => setZoomedSlot(null)}
+          />
         </motion.div>
       )}
     </AnimatePresence>

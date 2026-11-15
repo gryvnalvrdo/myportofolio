@@ -14,7 +14,6 @@ export const UI_COPY: Record<
       subtitle: string;
       availableLocation: string;
       academicLine: string;
-      ctaExplore: string;
       ctaCv: string;
       ctaLinkedIn: string;
     };
@@ -50,17 +49,16 @@ export const UI_COPY: Record<
       title: string;
       subtitle: string;
       printButton: string;
-      switchCvLang: string;
       summaryHeading: string;
       experienceHeading: string;
       educationHeading: string;
       skillsHeading: string;
+      gpaLabel: string;
       close: string;
     };
     contact: {
       kicker: string;
       heading: string;
-      subheading: string;
       emailLabel: string;
       emailHint: string;
       phoneLabel: string;
@@ -88,15 +86,14 @@ export const UI_COPY: Record<
       overview: "Profil",
       experiences: "Pengalaman",
       contact: "Kontak",
-      viewCv: "Lihat / Cetak CV",
+      viewCv: "Lihat CV",
       languageLabel: "Bahasa Tampilan",
     },
     hero: {
       subtitle: "S1 Manajemen · Manajemen Proyek, Acara & Kepemimpinan Organisasi",
       availableLocation: "Makassar, Indonesia",
-      academicLine: "Universitas Ciputra Makassar (2022–2026) · IPK 3.77 / 4.00",
-      ctaExplore: "Lihat Pengalaman",
-      ctaCv: "Lihat / Cetak CV",
+      academicLine: "Universitas Ciputra Makassar (2022–2026)",
+      ctaCv: "Lihat CV",
       ctaLinkedIn: "LinkedIn",
     },
     experiences: {
@@ -130,20 +127,18 @@ export const UI_COPY: Record<
     },
     cvModal: {
       title: "Ringkasan CV Dwibahasa",
-      subtitle: "Format siap baca HR dan dapat dicetak atau disimpan ke PDF (Indonesia / English).",
+      subtitle: "Format siap baca HR yang dapat dicetak atau disimpan sebagai PDF.",
       printButton: "Cetak / PDF",
-      switchCvLang: "Bahasa CV:",
       summaryHeading: "Ringkasan Profil",
       experienceHeading: "Pengalaman Organisasi & Acara",
       educationHeading: "Pendidikan",
       skillsHeading: "Kemampuan & Bahasa",
+      gpaLabel: "IPK",
       close: "Tutup",
     },
     contact: {
       kicker: "Kontak Profesional",
       heading: "Terbuka untuk Kesempatan Kerja & Kolaborasi",
-      subheading:
-        "Untuk keperluan proses rekrutmen HR, koordinasi acara, atau wawancara kerja, silakan hubungi melalui kontak berikut.",
       emailLabel: "Email",
       emailHint: "Korespondensi email langsung",
       phoneLabel: "Telepon",
@@ -170,15 +165,14 @@ export const UI_COPY: Record<
       overview: "Profile",
       experiences: "Experience",
       contact: "Contact",
-      viewCv: "View / Print CV",
+      viewCv: "View CV",
       languageLabel: "Display Language",
     },
     hero: {
       subtitle: "Bachelor of Management · Project, Event & Organizational Leadership",
       availableLocation: "Makassar, Indonesia",
-      academicLine: "Universitas Ciputra Makassar (2022–2026) · GPA 3.77 / 4.00",
-      ctaExplore: "Explore Experience",
-      ctaCv: "View / Print CV",
+      academicLine: "Universitas Ciputra Makassar (2022–2026)",
+      ctaCv: "View CV",
       ctaLinkedIn: "LinkedIn",
     },
     experiences: {
@@ -212,20 +206,18 @@ export const UI_COPY: Record<
     },
     cvModal: {
       title: "Bilingual Resume (ID / EN)",
-      subtitle: "Structured HR-ready resume view for printing or saving as PDF in Indonesian or English.",
+      subtitle: "Structured HR-ready resume view for printing or saving as PDF.",
       printButton: "Print / PDF",
-      switchCvLang: "CV Language:",
       summaryHeading: "Profile Summary",
       experienceHeading: "Organizational & Event Experience",
       educationHeading: "Education",
       skillsHeading: "Skills & Languages",
+      gpaLabel: "GPA",
       close: "Close",
     },
     contact: {
       kicker: "Professional Contact",
       heading: "Open for Career Opportunities & Collaboration",
-      subheading:
-        "For HR recruitment inquiries, interview scheduling, or project collaboration, feel free to reach out directly.",
       emailLabel: "Email",
       emailHint: "Direct email correspondence",
       phoneLabel: "Phone",
